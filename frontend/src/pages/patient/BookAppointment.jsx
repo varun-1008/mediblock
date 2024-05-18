@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
-import useWallet from "../context/UseWallet";
-import { ipfsDownload } from "../utils/ipfs";
 import styled from "styled-components";
+import useWallet from "../../context/UseWallet";
+import { ipfsDownload } from "../../utils/ipfs";
+import { useNavigate } from "react-router-dom";
 
 const StyledDiv = styled.div`
   display: flex;
   gap: 1rem;
 `;
 
-function AllAppointments() {
-  const { signer, contract } = useWallet();
+function BoookAppointment() {
   const [doctors, setDoctors] = useState([]);
+  const { signer, contract } = useWallet();
+
+  const navigate = useNavigate();
+
+  function handleBook(address) {
+    navigate(`${address}`);
+  }
 
   useEffect(() => {
     (async function () {
@@ -18,21 +25,23 @@ function AllAppointments() {
 
       const doctorsAddresses = await contract
         .connect(signer)
-        .getAppointedDoctors();
+        .getNotAppointedDoctors();
 
-      for (const [index, doctorAddress] of doctorsAddresses.entries()) {
+      for (const doctorAddress of doctorsAddresses) {
         const cid = await contract.getDoctorInfo(doctorAddress);
         const info = await ipfsDownload(cid);
-        info.index = index;
         info.address = doctorAddress;
         newData.push(info);
       }
       setDoctors(newData);
     })();
-  }, [doctors, signer, contract]);
+  }, [signer, contract]);
+
+  if (doctors.length === 0) return <h1>Loading</h1>;
+
   return (
     <>
-      <h1>All Appointments</h1>
+      <h1>Book Appointment</h1>
       {doctors.map((doctor) => {
         return (
           <StyledDiv key={doctor.name}>
@@ -40,6 +49,7 @@ function AllAppointments() {
             <p>{doctor.speciality}</p>
             <p>{doctor.gender}</p>
             <p>{doctor.phone}</p>
+            <button onClick={() => handleBook(doctor.address)}>Book</button>
           </StyledDiv>
         );
       })}
@@ -47,4 +57,4 @@ function AllAppointments() {
   );
 }
 
-export default AllAppointments;
+export default BoookAppointment;

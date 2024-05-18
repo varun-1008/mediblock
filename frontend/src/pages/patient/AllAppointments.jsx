@@ -1,23 +1,16 @@
 import { useEffect, useState } from "react";
+import useWallet from "../../context/UseWallet";
+import { ipfsDownload } from "../../utils/ipfs";
 import styled from "styled-components";
-import useWallet from "../context/UseWallet";
-import { ipfsDownload } from "../utils/ipfs";
-import { useNavigate } from "react-router-dom";
 
 const StyledDiv = styled.div`
   display: flex;
   gap: 1rem;
 `;
 
-function BoookAppointment() {
-  const [doctors, setDoctors] = useState([]);
+function AllAppointments() {
   const { signer, contract } = useWallet();
-
-  const navigate = useNavigate();
-
-  function handleBook(address) {
-    navigate(`${address}`);
-  }
+  const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
     (async function () {
@@ -25,23 +18,21 @@ function BoookAppointment() {
 
       const doctorsAddresses = await contract
         .connect(signer)
-        .getNotAppointedDoctors();
+        .getAppointedDoctors();
 
-      for (const doctorAddress of doctorsAddresses) {
+      for (const [index, doctorAddress] of doctorsAddresses.entries()) {
         const cid = await contract.getDoctorInfo(doctorAddress);
         const info = await ipfsDownload(cid);
+        info.index = index;
         info.address = doctorAddress;
         newData.push(info);
       }
       setDoctors(newData);
     })();
-  }, [signer, contract]);
-
-  if (doctors.length === 0) return <h1>Loading</h1>;
-
+  }, [doctors, signer, contract]);
   return (
     <>
-      <h1>Book Appointment</h1>
+      <h1>All Appointments</h1>
       {doctors.map((doctor) => {
         return (
           <StyledDiv key={doctor.name}>
@@ -49,7 +40,6 @@ function BoookAppointment() {
             <p>{doctor.speciality}</p>
             <p>{doctor.gender}</p>
             <p>{doctor.phone}</p>
-            <button onClick={() => handleBook(doctor.address)}>Book</button>
           </StyledDiv>
         );
       })}
@@ -57,4 +47,4 @@ function BoookAppointment() {
   );
 }
 
-export default BoookAppointment;
+export default AllAppointments;

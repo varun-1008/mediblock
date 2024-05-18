@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import useWallet from "../context/UseWallet";
-import { ipfsDownload } from "../utils/ipfs";
+import useWallet from "../../context/UseWallet";
+import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
 
 const StyledDiv = styled.div`

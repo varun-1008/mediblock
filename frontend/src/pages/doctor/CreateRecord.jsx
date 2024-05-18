@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import Buffer from "buffer";
-import useWallet from "../context/UseWallet";
-import { ipfsUpload } from "../utils/ipfs";
+import useWallet from "../../context/UseWallet";
+import { ipfsUpload } from "../../utils/ipfs";
 
 function CreateRecord() {
   const [title, setTitle] = useState("");

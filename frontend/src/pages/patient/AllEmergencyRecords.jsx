@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import useWallet from "../context/UseWallet";
-import Modal from "../ui/Modal";
-import Record from "../ui/Record";
+import useWallet from "../../context/UseWallet";
+import Modal from "../../ui/Modal";
+import Record from "../../ui/Record";
 
 
 function AllEmergencyRecords() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useWallet from "../context/UseWallet";
-import Records from "../ui/Records";
+import useWallet from "../../context/UseWallet";
+import Records from "../../ui/Records";
 
 function ViewAppointment() {
   const { patientAddress } = useParams();

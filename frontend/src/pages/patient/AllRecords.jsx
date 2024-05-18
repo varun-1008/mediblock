@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import useWallet from "../context/UseWallet";
-import Records from "../ui/Records";
+import useWallet from "../../context/UseWallet";
+import Records from "../../ui/Records";
 
 function AllRecords() {
   const [records, setRecords] = useState(null);
