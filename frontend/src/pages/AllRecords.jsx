@@ -41,7 +41,7 @@ function AllRecords() {
     <>
       <h1>All Records</h1>
 
-      <Records recordsInfo={{address, records}}/>
+      <Records recordsData={{address, records}}/>
     </>
   );
 }

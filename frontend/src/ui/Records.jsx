@@ -2,11 +2,11 @@ import { useState } from "react";
 import Modal from "./Modal";
 import Record from "./Record";
 
-function Records({ recordsInfo, buttonTitle, buttonFunction }) {
+function Records({ recordsData, buttonTitle, buttonFunction }) {
   const [selected, setSelected] = useState(null);
   const [isExpanded, setIsExpanded] = useState(null);
 
-  const { address, records } = recordsInfo;
+  const { address, records } = recordsData;
 
   function handleExpand(index) {
     setIsExpanded(isExpanded === index ? null : index);
