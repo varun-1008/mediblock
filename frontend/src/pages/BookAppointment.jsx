@@ -16,7 +16,6 @@ function BoookAppointment() {
   const navigate = useNavigate();
 
   function handleBook(address) {
-
     navigate(`${address}`);
   }
 
@@ -36,7 +35,7 @@ function BoookAppointment() {
       }
       setDoctors(newData);
     })();
-  }, [doctors, signer, contract]);
+  }, [signer, contract]);
 
   if (doctors.length === 0) return <h1>Loading</h1>;
 
