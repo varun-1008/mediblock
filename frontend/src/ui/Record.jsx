@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { ipfsDownload } from "../utils/ipfs";
 import useWallet from "../context/UseWallet";
-import styled from "styled-components";
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
 
 function Record({ recordData }) {
   const [record, setRecord] = useState(null);
@@ -66,7 +60,7 @@ function Record({ recordData }) {
 
   return (
     <>
-      <Row>
+      <div>
         <h1>{record.title}</h1>
         <p>{record.content}</p>
         {record.image && (
@@ -82,7 +76,7 @@ function Record({ recordData }) {
               : "mark as emergency record"}
           </button>
         }
-      </Row>
+      </div>
     </>
   );
 }

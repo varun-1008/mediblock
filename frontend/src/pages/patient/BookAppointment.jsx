@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
 
-const StyledDiv = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
 
 function BoookAppointment() {
   const [doctors, setDoctors] = useState([]);
@@ -44,13 +39,13 @@ function BoookAppointment() {
       <h1>Book Appointment</h1>
       {doctors.map((doctor) => {
         return (
-          <StyledDiv key={doctor.name}>
+          <div key={doctor.name}>
             <p>{doctor.name}</p>
             <p>{doctor.speciality}</p>
             <p>{doctor.gender}</p>
             <p>{doctor.phone}</p>
             <button onClick={() => handleBook(doctor.address)}>Book</button>
-          </StyledDiv>
+          </div>
         );
       })}
     </>

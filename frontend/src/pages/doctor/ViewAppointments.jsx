@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
 
-const StyledDiv = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
+
 
 function ViewAppointments() {
   const [patients, setPatients] = useState(null);
@@ -49,7 +45,7 @@ function ViewAppointments() {
       <h1>View Appointments</h1>
       {patients.map((patient) => {
         return (
-          <StyledDiv key={patient.name}>
+          <div key={patient.name}>
             <p>{patient.name}</p>
             <p>{patient.email}</p>
             <p>{patient.gender}</p>
@@ -58,7 +54,7 @@ function ViewAppointments() {
             <button onClick={() => handleRemove(patient.address)}>
               Remove
             </button>
-          </StyledDiv>
+          </div>
         );
       })}
     </>

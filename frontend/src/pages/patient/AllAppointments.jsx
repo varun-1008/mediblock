@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
-import styled from "styled-components";
 
-const StyledDiv = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
+
 
 function AllAppointments() {
   const { signer, contract } = useWallet();
@@ -35,12 +31,12 @@ function AllAppointments() {
       <h1>All Appointments</h1>
       {doctors.map((doctor) => {
         return (
-          <StyledDiv key={doctor.name}>
+          <div key={doctor.name}>
             <p>{doctor.name}</p>
             <p>{doctor.speciality}</p>
             <p>{doctor.gender}</p>
             <p>{doctor.phone}</p>
-          </StyledDiv>
+          </div>
         );
       })}
     </>
