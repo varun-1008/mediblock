@@ -1,4 +1,4 @@
-import { Clipboard, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import useWallet from "@/context/UseWallet";
@@ -58,15 +58,9 @@ export const UserButton = () => {
           <TooltipProvider>
             <Tooltip>
               <div className="flex items-center gap-4">
-                <TooltipTrigger className="text-sm text-zinc-400 line-clamp-1 font-extralight hover:cursor-pointer">
+                <TooltipTrigger className="text-sm text-zinc-400 line-clamp-1 font-extralight hover:cursor-pointer" onClick={copyToClipboard}>
                   {abbreviatedAddress}
                 </TooltipTrigger>
-                <Clipboard
-                  size={15}
-                  strokeWidth={1}
-                  className="text-white cursor-pointer"
-                  onClick={copyToClipboard}
-                />
               </div>
               <TooltipContent className="text-white bg-neutral-800">
                 {address}

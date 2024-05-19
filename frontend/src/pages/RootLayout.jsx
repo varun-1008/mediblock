@@ -18,8 +18,7 @@ export default function RootLayout() {
     return (    
         <div className="flex h-screen">
             <Sidebar />
-            <div className="flex flex-col">
-                <Header />
+            <div className="flex-1 h-full px-20 py-10 ">
                 <Outlet />
             </div>
         </div>       

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 
 function BoookAppointment() {
@@ -32,23 +33,23 @@ function BoookAppointment() {
     })();
   }, [signer, contract]);
 
-  if (doctors.length === 0) return <h1>Loading</h1>;
+  if (doctors.length === 0) return <h1>Loading...</h1>;
 
   return (
-    <>
-      <h1>Book Appointment</h1>
-      {doctors.map((doctor) => {
-        return (
-          <div key={doctor.name}>
-            <p>{doctor.name}</p>
-            <p>{doctor.speciality}</p>
-            <p>{doctor.gender}</p>
-            <p>{doctor.phone}</p>
-            <button onClick={() => handleBook(doctor.address)}>Book</button>
+    <div className="space-y-10">
+      <h1 className="text-lg font-semibold">Book an Appointment</h1>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 text-sm">
+        {doctors.map((doctor) => (
+          <div key={doctor.name} className="bg-[#F0F3F4] p-3">
+              <p>Dr. {doctor.name}</p>
+              <p>{doctor.speciality}</p>
+              <p>{doctor.gender}</p>
+              <p>{doctor.phone}</p>
+              <Button onClick={() => handleBook(doctor.address)} className="mt-3 w-full rounded-none" size="sm">Book</Button>
           </div>
-        );
-      })}
-    </>
+        ))}
+      </div>
+    </div>
   );
 }
 

@@ -3,9 +3,15 @@ import useWallet from "@/context/UseWallet";
 import { Link, useResolvedPath } from "react-router-dom";
 import {
   Album,
+  Ambulance,
+  ClipboardPlus,
+  FileClock,
   LayoutGrid,
+  LayoutPanelLeft,
   LibraryBig,
+  Link2,
   Newspaper,
+  SquareLibrary,
   UserRound,
   Zap,
 } from "lucide-react";
@@ -25,17 +31,17 @@ const navLinks = {
     {
       to: "/dashboard",
       label: "Dashboard",
-      icon: <LayoutGrid size={20} strokeWidth={2} />,
+      icon: <LayoutPanelLeft size={20} strokeWidth={2} />,
     },
     {
       to: "/patient/bookAppointment",
-      label: "Book appointment",
-      icon: <Album size={20} strokeWidth={2} />,
+      label: "Book Appointment",
+      icon: <ClipboardPlus size={20} strokeWidth={2} />,
     },
     {
       to: "/patient/allAppointments",
       label: "All Appointments",
-      icon: <Newspaper size={20} strokeWidth={2} />,
+      icon: <FileClock size={20} strokeWidth={2} />,
     },
     {
       to: "/patient/allRecords",
@@ -45,7 +51,7 @@ const navLinks = {
     {
       to: "/patient/allEmergencyRecords",
       label: "All Emergency Records",
-      icon: <Zap size={20} strokeWidth={2} />,
+      icon: <Ambulance size={20} strokeWidth={2} />,
     },
   ],
   2: [
@@ -86,7 +92,7 @@ export const Sidebar = () => {
                 className={cn(
                   "text-zinc-400 border-l-4 border-transparent font-light",
                   pathname === nav.to &&
-                    "text-white border-l-4 border-blue-300 font-medium"
+                    "text-white border-l-4 border-blue-400 font-medium"
                 )}
               >
                 <Link
@@ -106,8 +112,9 @@ export const Sidebar = () => {
       ) : (
         <Button
           onClick={handleConnect}
-          className="py-6 w-11/12 mx-auto rounded-xl flex items-center text-lg"
+          className="py-6 w-11/12 mx-auto rounded-xl flex items-center gap-2 text-sm font-medium bg-zinc-900 hover:bg-zinc-950"
         >
+            <Link2 size={18} />
           Connect
         </Button>
       )}

@@ -40,7 +40,6 @@ function AllRecords() {
   return (
     <>
       <h1>All Records</h1>
-
       <Records recordsData={{address, records}}/>
     </>
   );
