@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import useWallet from "../../context/UseWallet";
 import {Records} from "../../ui/Records";
 
-function BookAnAppointment() {
-  const { doctorAddress } = useParams();
+export default function BookAnAppointment() {
 
+  const { doctorAddress } = useParams();
   const [records, setRecords] = useState(null);
   const [selected, setSelected] = useState([]);
   const { signer, contract, address } = useWallet();
@@ -67,16 +67,16 @@ function BookAnAppointment() {
 
   return (
     <>
-      <h1>Book An Appointment</h1>
+      <h1 className="text-lg font-semibold">Book An Appointment</h1>
       <Records
-        recordsInfo={{ address, records }}
-        buttonTitle="Select"
+        address={address}
+        records={records}
+        // buttonTitle="Select"
         buttonFunction={handleSelect}
       />
-
       <button onClick={handleBook}>Book</button>
     </>
   );
 }
 
-export default BookAnAppointment;
+

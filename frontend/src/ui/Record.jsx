@@ -4,6 +4,7 @@ import useWallet from "../context/UseWallet";
 
 
 function Record({ recordData }) {
+
   const [record, setRecord] = useState(null);
 
   const { signer, contract } = useWallet();
@@ -54,7 +55,7 @@ function Record({ recordData }) {
 
       setRecord(dataObj);
     })();
-  }, [record, address, contract, linkIndex, recordIndex, signer]);
+  }, []);
 
   if (record === null) return <h1>Loading</h1>;
 

@@ -92,6 +92,8 @@ export const Sidebar = () => {
                 className={cn(
                   "text-zinc-400 border-l-4 border-transparent font-light",
                   pathname === nav.to &&
+                    "text-white border-l-4 border-blue-400 font-medium",
+                  pathname.includes(nav.to) && 
                     "text-white border-l-4 border-blue-400 font-medium"
                 )}
               >

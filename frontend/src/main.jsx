@@ -39,12 +39,10 @@ const router = createBrowserRouter([
           {
             path: "bookAppointment",
             element: <BoookAppointment />,
-            children: [
-              {
-                path: ":doctorAddress",
-                element: <BookAnAppointment />
-              }
-            ] 
+          },
+          {
+            path: "bookAppointment/:doctorAddress",
+            element: <BookAnAppointment />
           },
           {
             path: "allAppointments",
