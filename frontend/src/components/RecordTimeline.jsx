@@ -29,7 +29,7 @@ export const RecordTimeline = ({linkRecords, address, buttonFunction}) => {
                             <div className='w-full flex-1 flex justify-center items-center'>
                                 <Dialog>
                                 <DialogTrigger asChild>
-                                    <Button variant="ghost" className="w-full rounded-none">
+                                    <Button className="w-full rounded-none">
                                         View
                                     </Button>
                                 </DialogTrigger>
@@ -44,13 +44,6 @@ export const RecordTimeline = ({linkRecords, address, buttonFunction}) => {
                                 </DialogContent>
                                 </Dialog>
                             </div>
-                            {pathname.includes("/bookAppointment") && (    
-                                <div className='w-full flex-1 flex justify-center items-center border-l'>
-                                    <Button className={cn("w-full rounded-none", )} variant="ghost">
-                                        Select
-                                    </Button>
-                                </div>   
-                            )}
                         </div>
                       </div>
                       {recordIndex !== linkRecords.length - 1 && <MoveRight />}  

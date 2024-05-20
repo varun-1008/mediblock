@@ -11,7 +11,7 @@ function BoookAppointment() {
 
   const navigate = useNavigate();
 
-  function handleBook(address) {
+  function handleBook(address, name) {
     navigate(`${address}`);
   }
 
