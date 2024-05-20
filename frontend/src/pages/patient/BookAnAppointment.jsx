@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useWallet from "../../context/UseWallet";
-import {Records} from "../../ui/Records";
+import { Records } from "../../ui/Records";
 
 export default function BookAnAppointment() {
-
   const { doctorAddress } = useParams();
   const [records, setRecords] = useState(null);
   const [selected, setSelected] = useState([]);
   const { signer, contract, address } = useWallet();
 
   const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const doctorName = queryParams.get("name");
 
-  function handleSelect({ linkIndex }) {
+  const handleSelect = (linkIndex) => {
+    console.log("Access Granted", linkIndex);
     const isSelected = selected.find((el) => el === linkIndex);
     let newSelected = [...selected];
     if (isSelected !== undefined)
       newSelected = newSelected.filter((el) => el !== linkIndex);
     else newSelected.push(linkIndex);
     setSelected(newSelected);
-  }
+  };
 
   async function handleBook() {
     for (const linkIndex of selected) {
@@ -67,16 +69,15 @@ export default function BookAnAppointment() {
 
   return (
     <>
-      <h1 className="text-lg font-semibold">Book An Appointment</h1>
+      <h1 className="text-lg font-semibold">
+        Book An Appointment with Dr. {doctorName}
+      </h1>
       <Records
         address={address}
         records={records}
-        // buttonTitle="Select"
         buttonFunction={handleSelect}
       />
       <button onClick={handleBook}>Book</button>
     </>
   );
 }
-
-
