@@ -40,7 +40,7 @@ function BoookAppointment() {
       <h1 className="text-lg font-semibold">Book an Appointment</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10 text-sm">
         {doctors.map((doctor) => (
-          <div key={doctor.name} className="bg-[#F0F3F4] p-3">
+          <div key={doctor.name} className="bg-[#F0F3F4] p-4">
               <p>Dr. {doctor.name}</p>
               <p>{doctor.speciality}</p>
               <p>{doctor.gender}</p>

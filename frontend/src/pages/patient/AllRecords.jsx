@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
-import Records from "../../ui/Records";
+import  {Records}  from "@/ui/Records";
 
 function AllRecords() {
   const [records, setRecords] = useState(null);
@@ -38,10 +38,10 @@ function AllRecords() {
   if (!records) return <h1>Loading</h1>;
 
   return (
-    <>
-      <h1>All Records</h1>
-      <Records recordsData={{address, records}}/>
-    </>
+    <div className="space-y-10">
+      <h1 className="text-lg font-semibold">All Records</h1>
+      <Records address={address} records={records}/>
+    </div>
   );
 }
 

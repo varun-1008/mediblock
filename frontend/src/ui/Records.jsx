@@ -1,85 +1,69 @@
 import { useState } from "react";
-import Modal from "./Modal";
 import Record from "./Record";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
-function Records({ recordsData, buttonTitle, buttonFunction }) {
-  const [selected, setSelected] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(null);
+export function Records({ address, records }) {
 
-  const { address, records } = recordsData;
-
-  function handleExpand(index) {
-    setIsExpanded(isExpanded === index ? null : index);
-  }
-
-  function onClose() {
-    setSelected(null);
-  }
-
-  // function handleView({address, linkIndex, recordIndex}) {
-  //   setSelected({
-  //     address,
-  //     linkIndex,
-  //     recordIndex
-  //   })
-  // }
 
   return (
-    <>
-      <h1>Records</h1>
-      {records.map((linkRecords, index) => {
-        return (
-          <div key={index}>
-            {linkRecords.slice(0, 1).map((record) => {
-              return (
-                <div key={record.time}>
-                  <p onClick={() => handleExpand(index)}>{record.title}</p>
-                  <button
-                    onClick={() =>
-                      setSelected({
-                        address,
-                        linkIndex: record.linkIndex,
-                        recordIndex: record.recordIndex,
-                      })
-                    }
+    <div className="space-y-5">
+      <Accordion type="single" collapsible className="w-full">
+        {records.map((linkRecords, index) => (
+          <AccordionItem key={index} value={`item-${index}`}>
+            <AccordionTrigger>
+              {index + 1}. {linkRecords[0].title}
+            </AccordionTrigger>
+            <AccordionContent>
+             <div
+                className="relative ml-4 pl-4 border-l-2 border-gray-300"
+              >
+                {linkRecords.map((record, recordIndex) => (
+                  <div
+                    key={recordIndex}
+                    className="relative mb-8"
                   >
-                    View
-                  </button>
-                  <button onClick={() => buttonFunction({linkIndex : record.linkIndex})}>{buttonTitle}</button>
-                </div>
-              );
-            })}
-
-            {isExpanded === index &&
-              linkRecords.slice(1).map((record) => {
-                return (
-                  <div key={record.time}>
-                    <p>{record.title}</p>
-                    <button
-                      onClick={() =>
-                        setSelected({
-                          address,
-                          linkIndex: record.linkIndex,
-                          recordIndex: record.recordIndex,
-                        })
-                      }
-                    >
-                      View
-                    </button>
+                    <div className="absolute -left-6 top-0 w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <div className="pl-8">
+                      <p className="font-semibold">{record.title}</p>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="outline" className="mt-2">
+                            View
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                          <DialogHeader>
+                            <DialogTitle>Record Details</DialogTitle>
+                            <DialogDescription>
+                              Details of the selected record.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <Record recordData={{ address, ...record }} />
+                        </DialogContent>
+                      </Dialog>
+                    </div>
                   </div>
-                );
-              })}
-          </div>
-        );
-      })}
-
-      {selected && (
-        <Modal onClose={onClose}>
-          <Record recordData={{ address, ...selected }} />
-        </Modal>
-      )}
-    </>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
   );
 }
-
-export default Records;

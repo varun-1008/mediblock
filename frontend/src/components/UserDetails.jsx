@@ -26,7 +26,7 @@ export const UserDetails = () => {
   if(!data) return <h1>Loading...</h1>
 
   return (
-    <div className="space-y-4 bg-[#F0F3F4] p-5 h-max">
+    <div className="space-y-4 bg-[#F0F3F4] py-5 px-6 h-max">
         <h1 className='text-base font-medium'>{role === 1 ? "Patient Details" : "Doctor Details"}</h1>
         
         <div className='flex gap-5 text-sm'>
