@@ -4,7 +4,7 @@ import useWallet from "../../context/UseWallet";
 import { Records } from "../../ui/Records";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 export default function BookAnAppointment() {
   const { doctorAddress } = useParams();
@@ -29,7 +29,9 @@ export default function BookAnAppointment() {
   async function handleBook() {
     try {
       setLoading(true);
-      const tx = await contract.connect(signer).addAppointment(doctorAddress, selected);
+      const tx = await contract
+        .connect(signer)
+        .addAppointment(doctorAddress, selected);
       await tx.wait();
       navigate("/patient/allAppointments");
     } catch (error) {
@@ -73,10 +75,10 @@ export default function BookAnAppointment() {
   return (
     <div className="space-y-10">
       <div className="">
-        <h1 className="text-lg font-semibold">
-          Book An Appointment
-        </h1>
-        <p className="text-zinc-400">Select a record/s to share with Dr. {doctorName}</p>
+        <h1 className="font-medium">Book An Appointment</h1>
+        <p className="text-zinc-400 text-sm">
+          Select a record/s to share with Dr. {doctorName}
+        </p>
       </div>
       <Records
         address={address}
@@ -84,13 +86,14 @@ export default function BookAnAppointment() {
         buttonFunction={handleSelect}
       />
       <div className="w-full flex justify-end">
-        <Button onClick={handleBook} className="rounded-none flex items-center gap-2" disabled={selected.length === 0 || loading}>{loading && <Loader2 className="animate-spin w-4 h-4" />} Book</Button>
+        <Button
+          onClick={handleBook}
+          className="flex items-center gap-2 bg-blue-500"
+          disabled={selected.length === 0 || loading}
+        >
+          {loading && <Loader2 className="animate-spin w-4 h-4" />} Book
+        </Button>
       </div>
-      {selected.map((sel) => (
-        <p key={sel}>
-          {sel}
-        </p>
-      ))}
     </div>
   );
 }

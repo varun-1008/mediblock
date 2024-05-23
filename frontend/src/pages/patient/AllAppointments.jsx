@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
 
-
-
 function AllAppointments() {
   const { signer, contract } = useWallet();
   const [doctors, setDoctors] = useState([]);
@@ -27,19 +25,24 @@ function AllAppointments() {
     })();
   }, [doctors, signer, contract]);
   return (
-    <>
-      <h1>All Appointments</h1>
-      {doctors.map((doctor) => {
-        return (
-          <div key={doctor.name}>
+    <div className="space-y-10">
+      <div className="">
+        <h1 className="font-medium">All Appointments</h1>
+        <p className="text-sm text-zinc-400">
+          List of all the active appointments
+        </p>
+      </div>
+      <div className="grid grid-cols-4">
+        {doctors.map((doctor) => (
+          <div key={doctor.name} className="border bg-white rounded-lg">
             <p>{doctor.name}</p>
             <p>{doctor.speciality}</p>
             <p>{doctor.gender}</p>
             <p>{doctor.phone}</p>
           </div>
-        );
-      })}
-    </>
+        ))}
+      </div>
+    </div>
   );
 }
 

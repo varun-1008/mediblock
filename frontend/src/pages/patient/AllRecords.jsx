@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
-import  {Records}  from "@/ui/Records";
+import { Records } from "@/ui/Records";
 
 function AllRecords() {
   const [records, setRecords] = useState(null);
   const { signer, contract, address } = useWallet();
-
 
   useEffect(() => {
     (async function () {
@@ -40,10 +39,12 @@ function AllRecords() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-lg font-semibold">All Records</h1>
-        <p className="text-zinc-400">List of all the secured records prescribed by the doctors.</p>
+        <h1 className="text-base font-medium">All Records</h1>
+        <p className="text-zinc-400 text-sm">
+          List of all the secured records prescribed by the doctors.
+        </p>
       </div>
-      <Records address={address} records={records}/>
+      <Records address={address} records={records} />
     </div>
   );
 }

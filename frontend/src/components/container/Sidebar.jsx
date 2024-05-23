@@ -13,6 +13,7 @@ import {
   LogOut,
   Newspaper,
   Settings,
+  User,
   UserRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -74,6 +75,11 @@ const profileLinks = [
     label: "Settings",
     icon: <Settings size={20} strokeWidth={2} />,
   },
+  {
+    to: "/profiles",
+    label: "Profile",
+    icon: <User size={20} strokeWidth={2} />,
+  },
 ];
 
 export const Sidebar = () => {
@@ -94,7 +100,7 @@ export const Sidebar = () => {
                 <li
                   key={i}
                   className={cn(
-                    "text-zinc-400 rounded-lg transition",
+                    "text-zinc-500 rounded-lg transition",
                     isActive && "text-white font-medium bg-blue-500",
                     !isActive && "hover:bg-zinc-100 hover:text-zinc-500"
                   )}
@@ -121,7 +127,7 @@ export const Sidebar = () => {
                 <li
                   key={i}
                   className={cn(
-                    "text-zinc-400 rounded-lg transition",
+                    "text-zinc-500 rounded-lg transition",
                     isActive && "text-white font-medium bg-blue-500",
                     !isActive && "hover:bg-zinc-100 hover:text-zinc-500"
                   )}
@@ -139,7 +145,7 @@ export const Sidebar = () => {
             <li>
               <Button
                 variant="ghost"
-                className="flex justify-start gap-3 text-sm px-5 py-4 w-full text-zinc-400 h-max hover:bg-zinc-100 hover:text-zinc-500"
+                className="flex justify-start gap-3 text-sm px-5 py-4 w-full text-zinc-500 h-max hover:bg-zinc-100 hover:text-zinc-500"
                 size="lg"
               >
                 <LogOut size={20} /> Logout
