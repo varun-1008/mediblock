@@ -7,16 +7,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
 import Record from "@/ui/Record";
-import { ArrowBigRight, ArrowRight, MoveRight } from "lucide-react";
-import { useResolvedPath } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 
-export const RecordTimeline = ({ linkRecords, address, buttonFunction }) => {
-  const pathname = useResolvedPath().pathname;
-
+export const RecordTimeline = ({ linkRecords, address }) => {
   return (
     <div className="flex flex-wrap gap-1">
       {linkRecords.map((record, recordIndex) => (
@@ -34,19 +29,21 @@ export const RecordTimeline = ({ linkRecords, address, buttonFunction }) => {
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-md">
-                    <DialogHeader>
-                      <DialogTitle>Record Details</DialogTitle>
-                      <DialogDescription>
-                        Details of the selected record.
-                      </DialogDescription>
-                    </DialogHeader>
+                    <div className="">
+                      <h1 className="font-medium">Record Details</h1>
+                      <p className="text-sm text-zinc-400">
+                        Details of the selected record
+                      </p>
+                    </div>
                     <Record recordData={{ address, ...record }} />
                   </DialogContent>
                 </Dialog>
               </div>
             </div>
           </div>
-          {recordIndex !== linkRecords.length - 1 && <ArrowRight size={25} />}
+          {recordIndex !== linkRecords.length - 1 && (
+            <ArrowRight size={20} className="text-zinc-500" />
+          )}
         </div>
       ))}
     </div>

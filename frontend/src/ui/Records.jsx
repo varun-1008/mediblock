@@ -7,7 +7,7 @@ import {
 import { RecordTimeline } from "@/components/RecordTimeline";
 import { Button } from "@/components/ui/button";
 import { useResolvedPath } from "react-router-dom";
-import { CheckCircle, Dot } from "lucide-react";
+import { Check, CheckCircle, Dot } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
@@ -30,30 +30,35 @@ export function Records({ address, records, buttonFunction = () => {} }) {
           <AccordionItem key={index} value={`item-${index}`}>
             <AccordionTrigger>
               <div className="flex gap-1 text-base font-medium">
-                <Dot strokeWidth={4} />
+                {/* <Dot strokeWidth={4} /> */}
                 {linkRecords[0].title}
                 {selected.includes(linkRecords[0].linkIndex) && (
-                  <Badge className={"bg-blue-500 ml-2"}>Selected</Badge>
+                  <Badge
+                    className={
+                      "bg-emerald-500 ml-2 hover:bg-emerald-500/90 gap-1"
+                    }
+                  >
+                    <Check size={15} strokeWidth={3} />
+                    Selected
+                  </Badge>
                 )}
               </div>
             </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-5">
-                <RecordTimeline
-                  linkRecords={linkRecords}
-                  address={address}
-                  buttonFunction={buttonFunction}
-                />
+                <RecordTimeline linkRecords={linkRecords} address={address} />
                 {pathname.includes("bookAppointment") && (
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={selected.includes(linkRecords[0].linkIndex)}
-                      onChange={() => {
-                        handleCheckboxChange(linkRecords[0].linkIndex);
-                      }}
-                    />
-                    <label>Select record</label>
+                  <div className="flex items-center gap-2 select-none">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selected.includes(linkRecords[0].linkIndex)}
+                        onChange={() => {
+                          handleCheckboxChange(linkRecords[0].linkIndex);
+                        }}
+                      />
+                      Select record
+                    </label>
                   </div>
                 )}
               </div>

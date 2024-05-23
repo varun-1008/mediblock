@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { ipfsDownload } from "../utils/ipfs";
 import useWallet from "../context/UseWallet";
-
+import { Button } from "@/components/ui/button";
 
 function Record({ recordData }) {
-
   const [record, setRecord] = useState(null);
 
   const { signer, contract } = useWallet();
@@ -60,25 +59,25 @@ function Record({ recordData }) {
   if (record === null) return <h1>Loading</h1>;
 
   return (
-    <>
-      <div>
-        <h1>{record.title}</h1>
-        <p>{record.content}</p>
+    <div>
+      <div className="space-y-2 text-sm">
+        <h1 className="font-medium text-base">{record.title}</h1>
+        <div className="space-y-0">
+          <p className="italic">Notes:</p>
+          <p>{record.content}</p>
+        </div>
         {record.image && (
-          <img
-            src={`data:image/png;base64,${record.image}`}
-            width="300px"
-          ></img>
+          <img src={`data:image/png;base64,${record.image}`}></img>
         )}
         {
-          <button onClick={handleEmergency}>
+          <Button onClick={handleEmergency} className="w-full bg-destructive">
             {record.isEmergency
-              ? "Unmark as emergency record"
-              : "mark as emergency record"}
-          </button>
+              ? "Remove from Emergency Record"
+              : "Mark as an Emergency Record"}
+          </Button>
         }
       </div>
-    </>
+    </div>
   );
 }
 

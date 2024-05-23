@@ -75,7 +75,7 @@ export default function BookAnAppointment() {
   return (
     <div className="space-y-10">
       <div className="">
-        <h1 className="font-medium">Book An Appointment</h1>
+        <h1 className="font-medium">Grant Access</h1>
         <p className="text-zinc-400 text-sm">
           Select a record/s to share with Dr. {doctorName}
         </p>
@@ -92,6 +92,7 @@ export default function BookAnAppointment() {
           disabled={selected.length === 0 || loading}
         >
           {loading && <Loader2 className="animate-spin w-4 h-4" />} Book
+          Appointment
         </Button>
       </div>
     </div>
