@@ -14,6 +14,7 @@ import ViewAppointment from "./pages/doctor/ViewAppointment.jsx";
 import WalletProvider from "./context/WalletContext";
 import { Toaster } from "react-hot-toast";
 import Register from "./pages/Register";
+import Settings from "./pages/Settings";
 
 
 const router = createBrowserRouter([
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />
+      },
+      {
+        path: "settings",
+        element: <Settings />
       }
     ]
   }

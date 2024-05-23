@@ -47,18 +47,17 @@ export const UserButton = () => {
   }
 
   return (
-    <div className="container shadow-sm border-l-4 border-transparent flex justify-between w-full">
-      <div className="flex items-center gap-4 h-full">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
+    <div className="flex justify-between w-full">
+      <div className="flex items-center gap-3 h-full">
+        <Avatar className="flex items-center justify-center text-xl bg-blue-400 text-white">
+          {data.name[0]}
         </Avatar>
         <div className="flex flex-col h-full justify-between flex-1">
-          <p className="text-sm text-white font-light">{data.name}</p>
+          <p className="text-sm font-medium">{role === 2 && "Dr."} {data.name}</p>
           <TooltipProvider>
             <Tooltip>
               <div className="flex items-center gap-4">
-                <TooltipTrigger className="text-sm text-zinc-400 line-clamp-1 font-extralight hover:cursor-pointer" onClick={copyToClipboard}>
+                <TooltipTrigger className="text-sm text-zinc-400 line-clamp-1 font-light hover:cursor-pointer" onClick={copyToClipboard}>
                   {abbreviatedAddress}
                 </TooltipTrigger>
               </div>
@@ -69,9 +68,6 @@ export const UserButton = () => {
           </TooltipProvider>
         </div>
       </div>
-      <button className="text-white bg-transparent hover:text-zinc-500 transition">
-        <LogOut size={"19"} />
-      </button>
     </div>
   );
 };

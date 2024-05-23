@@ -35,7 +35,7 @@ function RegisterDoctor() {
   }
 
   return (
-    <>
+    <div className="w-full">
       <h1>Register Doctor</h1>
 
       <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -59,7 +59,7 @@ function RegisterDoctor() {
 
         <button>Submit</button>
       </form>
-    </>
+    </div>
   );
 }
 

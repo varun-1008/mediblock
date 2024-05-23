@@ -10,10 +10,10 @@ import {
   LayoutPanelLeft,
   LibraryBig,
   Link2,
+  LogOut,
   Newspaper,
-  SquareLibrary,
+  Settings,
   UserRound,
-  Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -50,7 +50,7 @@ const navLinks = {
     },
     {
       to: "/patient/allEmergencyRecords",
-      label: "All Emergency Records",
+      label: "Emergency Records",
       icon: <Ambulance size={20} strokeWidth={2} />,
     },
   ],
@@ -68,57 +68,85 @@ const navLinks = {
   ],
 };
 
+const profileLinks = [
+  {
+    to: "/settings",
+    label: "Settings",
+    icon: <Settings size={20} strokeWidth={2} />,
+  },
+];
+
 export const Sidebar = () => {
   const { role } = useWallet();
   const pathname = useResolvedPath().pathname;
 
-  const { getSigner } = useWallet();
-
-  async function handleConnect() {
-    await getSigner();
-  }
-
   return (
-    <aside className="flex flex-col justify-between bg-neutral-800 w-1/5 py-10">
-      <div className="flex flex-col gap-10 items-center text-white">
-        <Link className="text-xl font-bold" to="dashboard">
-          Mediblock
+    <aside className="flex flex-col justify-between h-screen items-center w-1/5 py-10 overflow-y-auto bg-white">
+      <div className="flex flex-col gap-14 items-center w-9/12 h-full">
+        <Link className="text-2xl font-semibold leading-none" to="dashboard">
+          MediBlock
         </Link>
-        <ul className="flex flex-col gap-3 w-full">
-          {navLinks[role].map((nav, i) => {
-            return (
-              <li
-                key={i}
-                className={cn(
-                  "text-zinc-400 border-l-4 border-transparent font-light",
-                  pathname === nav.to &&
-                    "text-white border-l-4 border-blue-400 font-medium",
-                  pathname.includes(nav.to) && 
-                    "text-white border-l-4 border-blue-400 font-medium"
-                )}
-              >
-                <Link
-                  to={nav.to}
-                  className="flex items-center gap-5 text-sm pl-12 py-3"
+        <div className="space-y-5 w-full">
+          <ul className="flex flex-col gap-1 w-full">
+            {navLinks[role].map((nav, i) => {
+              const isActive = pathname === nav.to || pathname.includes(nav.to);
+              return (
+                <li
+                  key={i}
+                  className={cn(
+                    "text-zinc-400 rounded-lg transition",
+                    isActive && "text-white font-medium bg-blue-500",
+                    !isActive && "hover:bg-zinc-100 hover:text-zinc-500"
+                  )}
                 >
-                  {nav.icon}
-                  {nav.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                  <Link
+                    to={nav.to}
+                    className="flex items-center gap-3 text-sm px-5 py-4"
+                  >
+                    {nav.icon}
+                    {nav.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
-      {role !== 0 ? (
-        <UserButton />
-      ) : (
-        <Button
-          onClick={handleConnect}
-          className="py-6 w-11/12 mx-auto rounded-xl flex items-center gap-2 text-sm font-medium bg-zinc-900 hover:bg-zinc-950"
-        >
-            <Link2 size={18} />
-          Connect
-        </Button>
+      {role !== 0 && (
+        <div className="w-9/12">
+          <ul className="flex flex-col gap-1 w-full">
+            {profileLinks.map((nav, i) => {
+              const isActive = pathname === nav.to || pathname.includes(nav.to);
+              return (
+                <li
+                  key={i}
+                  className={cn(
+                    "text-zinc-400 rounded-lg transition",
+                    isActive && "text-white font-medium bg-blue-500",
+                    !isActive && "hover:bg-zinc-100 hover:text-zinc-500"
+                  )}
+                >
+                  <Link
+                    to={nav.to}
+                    className="flex items-center gap-3 text-sm px-5 py-4"
+                  >
+                    {nav.icon}
+                    {nav.label}
+                  </Link>
+                </li>
+              );
+            })}
+            <li>
+              <Button
+                variant="ghost"
+                className="flex justify-start gap-3 text-sm px-5 py-4 w-full text-zinc-400 h-max hover:bg-zinc-100 hover:text-zinc-500"
+                size="lg"
+              >
+                <LogOut size={20} /> Logout
+              </Button>
+            </li>
+          </ul>
+        </div>
       )}
     </aside>
   );

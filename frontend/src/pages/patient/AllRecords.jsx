@@ -39,7 +39,10 @@ function AllRecords() {
 
   return (
     <div className="space-y-10">
-      <h1 className="text-lg font-semibold">All Records</h1>
+      <div>
+        <h1 className="text-lg font-semibold">All Records</h1>
+        <p className="text-zinc-400">List of all the secured records prescribed by the doctors.</p>
+      </div>
       <Records address={address} records={records}/>
     </div>
   );

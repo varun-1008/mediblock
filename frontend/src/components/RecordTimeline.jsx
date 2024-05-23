@@ -23,7 +23,7 @@ export const RecordTimeline = ({ linkRecords, address, buttonFunction }) => {
         <div key={recordIndex} className="flex items-center gap-1">
           <div className="border select-none">
             <div className="px-5 py-4 border-b w-full flex items-center justify-center">
-              <p className="font-semibold leading-none w-max">{record.title}</p>
+              <p className="font-medium leading-none w-max">{record.title}</p>
             </div>
             <div className="flex w-full">
               <div className="w-full flex-1 flex justify-center items-center">

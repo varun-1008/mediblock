@@ -112,7 +112,7 @@ contract MediBlock {
         uint linkIndex,
         address _addr,
         uint _seconds
-    ) public isPatient(msg.sender) isDoctorOrPathologist(_addr) {
+    ) internal isPatient(msg.sender) isDoctorOrPathologist(_addr) {
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         uint accessIndex = patient.access[linkIndex].length;
         patient.access[linkIndex].push();
@@ -273,11 +273,16 @@ contract MediBlock {
      * @dev patient address is provided by msg.sender
      * @param _doctor doctor address
      */
-    function addAppointment(address _doctor) public isPatient(msg.sender) isDoctor(_doctor) {
+    function addAppointment(address _doctor, uint256[] memory linkIndices) public isPatient(msg.sender) isDoctor(_doctor) {
         IterableMappingDoctor.Doctor storage doctor = doctors.get(_doctor);
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         patient.appointedDoctors.push(_doctor);
         doctor.appointments.push(msg.sender);
+
+        uint len = linkIndices.length;
+        for(uint i = 0; i < len; i++) {
+            giveAccess(linkIndices[i], _doctor, 17163390304230);
+        }
     }
 
     /**

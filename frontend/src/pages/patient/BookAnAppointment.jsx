@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useWallet from "../../context/UseWallet";
 import { Records } from "../../ui/Records";
+import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
+import { Loader, Loader2 } from "lucide-react";
 
 export default function BookAnAppointment() {
   const { doctorAddress } = useParams();
   const [records, setRecords] = useState(null);
   const [selected, setSelected] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { signer, contract, address } = useWallet();
 
   const navigate = useNavigate();
@@ -14,7 +18,6 @@ export default function BookAnAppointment() {
   const doctorName = queryParams.get("name");
 
   const handleSelect = (linkIndex) => {
-    console.log("Access Granted", linkIndex);
     const isSelected = selected.find((el) => el === linkIndex);
     let newSelected = [...selected];
     if (isSelected !== undefined)
@@ -24,17 +27,17 @@ export default function BookAnAppointment() {
   };
 
   async function handleBook() {
-    for (const linkIndex of selected) {
-      const tx = await contract
-        .connect(signer)
-        .giveAccess(linkIndex, doctorAddress, Date.now() + 7 * 24 * 60 * 60);
+    try {
+      setLoading(true);
+      const tx = await contract.connect(signer).addAppointment(doctorAddress, selected);
       await tx.wait();
+      navigate("/patient/allAppointments");
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-
-    const tx = await contract.connect(signer).addAppointment(doctorAddress);
-    await tx.wait();
-
-    navigate("/patient/allAppointments");
   }
 
   useEffect(() => {
@@ -68,16 +71,26 @@ export default function BookAnAppointment() {
   if (records === null) return <h1>Loading</h1>;
 
   return (
-    <>
-      <h1 className="text-lg font-semibold">
-        Book An Appointment with Dr. {doctorName}
-      </h1>
+    <div className="space-y-10">
+      <div className="">
+        <h1 className="text-lg font-semibold">
+          Book An Appointment
+        </h1>
+        <p className="text-zinc-400">Select a record/s to share with Dr. {doctorName}</p>
+      </div>
       <Records
         address={address}
         records={records}
         buttonFunction={handleSelect}
       />
-      <button onClick={handleBook}>Book</button>
-    </>
+      <div className="w-full flex justify-end">
+        <Button onClick={handleBook} className="rounded-none flex items-center gap-2" disabled={selected.length === 0 || loading}>{loading && <Loader2 className="animate-spin w-4 h-4" />} Book</Button>
+      </div>
+      {selected.map((sel) => (
+        <p key={sel}>
+          {sel}
+        </p>
+      ))}
+    </div>
   );
 }
