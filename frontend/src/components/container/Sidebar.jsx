@@ -81,7 +81,7 @@ export const Sidebar = () => {
   const pathname = useResolvedPath().pathname;
 
   return (
-    <aside className="flex flex-col justify-between h-screen items-center w-1/5 py-10 overflow-y-auto bg-white">
+    <aside className="flex flex-col justify-between items-center w-1/5 py-10 overflow-y-auto">
       <div className="flex flex-col gap-14 items-center w-9/12 h-full">
         <Link className="text-2xl font-semibold leading-none" to="dashboard">
           MediBlock

@@ -16,11 +16,11 @@ export default function RootLayout() {
   }, [role, navigate]);
 
   return (
-    <div className="flex h-screen relative">
+    <div className="flex h-screen">
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex-1 overflow-y-auto h-screen">
         <Navbar />
-        <div className="w-full p-10 bg-[#F6F6F6] h-full">
+        <div className="p-10 bg-[#F6F6F6] h-full">
           <Outlet />
         </div>
       </div>
