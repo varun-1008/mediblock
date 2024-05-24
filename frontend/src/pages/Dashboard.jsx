@@ -52,7 +52,7 @@ function Dashboard() {
 
   return (
     <div className="space-y-10">
-      <div className="w-full h-full grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="w-full h-full grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* <UserDetails data={data} role={role} /> */}
         <TotalRecords data={data} role={role} />
         <TotalAppointments data={data} role={role} />

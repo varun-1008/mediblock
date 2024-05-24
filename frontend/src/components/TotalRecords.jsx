@@ -5,7 +5,7 @@ export const TotalRecords = ({ data, role }) => {
   return (
     <Link
       to="/patient/allRecords"
-      className="rounded-xl bg-white py-8 px-12 flex items-center justify-start cursor-pointer"
+      className="rounded-xl bg-white p-10 flex items-center justify-start cursor-pointer"
     >
       <div className="flex flex-col gap-5">
         <div className="flex gap-4">
