@@ -1,3 +1,6 @@
+import { ActiveAppointments } from "@/components/ActiveAppointments";
+import { TotalAppointments } from "@/components/TotalAppointments";
+import { TotalRecords } from "@/components/TotalRecords";
 import { UserDetails } from "@/components/UserDetails";
 import useWallet from "@/context/UseWallet";
 import { doctorInfoCid } from "@/utils/doctor";
@@ -50,7 +53,10 @@ function Dashboard() {
   return (
     <div className="space-y-10">
       <div className="w-full h-full grid grid-cols-1 md:grid-cols-3 gap-5">
-        <UserDetails data={data} role={role} />
+        {/* <UserDetails data={data} role={role} /> */}
+        <TotalRecords data={data} role={role} />
+        <TotalAppointments data={data} role={role} />
+        <ActiveAppointments data={data} role={role} />
       </div>
     </div>
   );

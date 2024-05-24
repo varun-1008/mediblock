@@ -2,14 +2,12 @@ import React from "react";
 import useWallet from "@/context/UseWallet";
 import { Link, useResolvedPath } from "react-router-dom";
 import {
-  Album,
   Ambulance,
   ClipboardPlus,
   FileClock,
   LayoutGrid,
   LayoutPanelLeft,
   LibraryBig,
-  Link2,
   LogOut,
   Newspaper,
   Settings,
@@ -18,7 +16,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { UserButton } from "../UserButton";
 
 const navLinks = {
   0: [
@@ -145,7 +142,7 @@ export const Sidebar = () => {
             <li>
               <Button
                 variant="ghost"
-                className="flex justify-start gap-3 text-sm px-5 py-4 w-full text-zinc-500 h-max hover:bg-zinc-100 hover:text-zinc-500"
+                className="flex justify-start gap-3 text-sm px-5 py-4 w-full text-zinc-500 h-max hover:bg-zinc-100 hover:text-zinc-500 font-normal"
                 size="lg"
               >
                 <LogOut size={20} /> Logout
