@@ -283,6 +283,29 @@ contract MediBlock {
         for(uint i = 0; i < len; i++) {
             giveAccess(linkIndices[i], _doctor, 17163390304230);
         }
+
+        patient.numberOfAppointments = patient.numberOfAppointments + 1;
+        doctor.numberOfAppointments = doctor.numberOfAppointments + 1;
+    }
+
+    function getNumberOfAppointmentsPatient() public view isPatient(msg.sender) returns (uint){
+        IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
+        return patient.numberOfAppointments;
+    }
+
+    function getNumberOfActiveAppointmentsPatient() public view isPatient(msg.sender) returns (uint){
+        IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
+        return patient.appointedDoctors.length;
+    }
+
+    function getNumberOfAppointmentsDoctor() public view isDoctor(msg.sender) returns (uint){
+        IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
+        return doctor.numberOfAppointments;
+    }
+
+    function getNumberOfActiveAppointmentsDoctor() public view isDoctor(msg.sender) returns (uint){
+        IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
+        return doctor.appointments.length;
     }
 
     /**
@@ -451,6 +474,7 @@ contract MediBlock {
         string memory _data
     ) public isPatient(_patient) isDoctor(msg.sender) {
         IterableMappingPatient.Patient storage patient = patients.get(_patient);
+        IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
         uint linkIndex = patient.linkLength;
         patient.linkLength++;
         uint accessIndex = patient.access[linkIndex].length;
@@ -460,6 +484,9 @@ contract MediBlock {
         accessTime += 1000000000;
         patient.access[linkIndex][accessIndex].time = accessTime;
         patient.records[linkIndex].push(IterableMappingPatient.Record(msg.sender, _title, _date, _data, false));
+        
+        patient.numberOfRecords = patient.numberOfRecords + 1;
+        doctor.numberOfRecords = doctor.numberOfRecords + 1;
     }
 
     /**
@@ -479,6 +506,7 @@ contract MediBlock {
         string memory _data
     ) public isPatient(_patient) isDoctor(msg.sender) {
         IterableMappingPatient.Patient storage patient = patients.get(_patient);
+        IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
         uint recordIndex = patient.records[linkIndex].length;
         // console.log(recordIndex);
         patient.records[linkIndex].push();
@@ -487,6 +515,19 @@ contract MediBlock {
         patient.records[linkIndex][recordIndex].date = _date;
         patient.records[linkIndex][recordIndex].data = _data;
         // console.log(patient.records[linkIndex].length);
+
+        patient.numberOfRecords = patient.numberOfRecords + 1;
+        doctor.numberOfRecords = doctor.numberOfRecords + 1;
+    }
+
+    function getNumberOfRecordsPatient() public view isPatient(msg.sender) returns (uint) {
+        IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
+        return patient.numberOfRecords;
+    }
+
+    function getNumberOfRecordsDoctor() public view isDoctor(msg.sender) returns (uint) {
+        IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
+        return doctor.numberOfRecords;
     }
 
     /**

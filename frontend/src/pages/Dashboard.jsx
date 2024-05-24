@@ -7,19 +7,45 @@ import { useEffect, useState } from "react";
 
 function Dashboard() {
   const [data, setData] = useState(null);
-  const {role, address, contract} = useWallet();
+  const { role, address, contract, signer } = useWallet();
 
   useEffect(() => {
     (async function () {
       let infoCid;
       if (role === 1) infoCid = await patientInfoCid({ address, contract });
       if (role === 2) infoCid = await doctorInfoCid({ address, contract });
+
       if (infoCid) {
         const data = await ipfsDownload(infoCid);
+        if (role === 1) {
+          data["numberOfRecords"] = Number(
+            await contract.connect(signer).getNumberOfRecordsPatient()
+          );
+          data["numberOfAppointments"] = Number(
+            await contract.connect(signer).getNumberOfAppointmentsPatient()
+          );
+          data["numberOfActiveAppointments"] = Number(
+            await contract
+              .connect(signer)
+              .getNumberOfActiveAppointmentsPatient()
+          );
+        }
+
+        if (role === 2) {
+          data["numberOfRecords"] = Number(
+            await contract.connect(signer).getNumberOfRecordsDoctor()
+          );
+          data["numberOfAppointments"] = Number(
+            await contract.connect(signer).getNumberOfAppointmentsDoctor()
+          );
+          data["numberOfActiveAppointments"] = Number(
+            await contract.connect(signer).getNumberOfActiveAppointmentsDoctor()
+          );
+        }
         setData(data);
       }
     })();
-  }, [])
+  }, []);
 
   return (
     <div className="space-y-10">
