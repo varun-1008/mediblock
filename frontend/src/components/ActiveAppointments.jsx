@@ -17,7 +17,7 @@ export const ActiveAppointments = ({ data, role }) => {
               {data.numberOfActiveAppointments}
             </h1>
             <p className="text-base text-zinc-400">
-              {role === 1 ? "Appointment" : "Consultation"}
+              Active {role === 1 ? "Appointment" : "Consultation"}
               {data.numberOfActiveAppointments > 1 ? "s" : ""}
             </p>
           </div>
