@@ -4,7 +4,7 @@ export const ActiveAppointments = ({ data, role }) => {
   if (!data) return null;
   return (
     <Link
-      to="/dashboard"
+      to="/patient/allAppointments"
       className="rounded-xl bg-white py-8 px-12 flex items-center justify-start cursor-pointer"
     >
       <div className="flex flex-col gap-5">
