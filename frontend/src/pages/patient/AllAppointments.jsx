@@ -34,7 +34,7 @@ function AllAppointments() {
           List of all the doctors you have active appointments with
         </p>
       </div>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-4 gap-5">
         {doctors.map((doctor) => (
           <div key={doctor.name} className="bg-white rounded-lg border h-max">
             <div className="p-4 space-y-4">
