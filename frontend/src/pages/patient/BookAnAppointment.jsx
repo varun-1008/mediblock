@@ -89,7 +89,7 @@ export default function BookAnAppointment() {
         <Button
           onClick={handleBook}
           className="flex items-center gap-2 bg-blue-500"
-          disabled={selected.length === 0 || loading}
+          disabled={loading}
         >
           {loading && <Loader2 className="animate-spin w-4 h-4" />} Book
           Appointment
