@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 export const TotalAppointments = ({ data, role }) => {
@@ -6,7 +5,7 @@ export const TotalAppointments = ({ data, role }) => {
   return (
     <Link
       to="/dashboard"
-      className="rounded-xl bg-white p-10 flex items-center justify-start cursor-pointer"
+      className="rounded-xl bg-white pl-10 py-10 flex items-center justify-start cursor-pointer"
     >
       <div className="flex flex-col gap-5">
         <div className="flex gap-4">
