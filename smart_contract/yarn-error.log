@@ -1,0 +1,50 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\hp\AppData\Local\node\corepack\yarn\1.22.19\bin\yarn.js
+
+PATH: 
+  C:\Users\hp\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\hp\bin;A:\app\hp\product\11.2.0\dbhome_1\bin;C:\Program Files\Python39\Scripts;C:\Program Files\Python39;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\php-8.1.12;C:\Program Files\dotnet;C:\Program Files\nodejs;C:\Program Files\Cloudflare\Cloudflare WARP;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\hp\AppData\Local\Programs\Python\Python310\Scripts;C:\Users\hp\AppData\Local\Programs\Python\Python310;C:\Users\hp\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin;C:\Users\hp\AppData\Local\Programs\Microsoft VS Code\bin;A:\CrossPlatform\flutter_windows_2.8.1-stable\flutter\bin;C:\Program Files\nodejs;C:\Program Files\MongoDB\Server\6.0\bin\mongosh-1.8.0-win32-x64\bin;C:\Program Files\MongoDB\Server\6.0\bin;C:\mongodb-database-tools-windows-x86_64-100.7.3\bin;C:\Users\hp\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  20.9.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'A:\Final-Year-Project\mediblock\smart_contract\node_modules\@nomicfoundation\solidity-analyzer-win32-x64-msvc\solidity-analyzer.win32-x64-msvc.node'
+
+npm manifest: 
+  {
+    "name": "project",
+    "version": "1.0.0",
+    "license": "MIT",
+    "devDependencies": {
+      "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+      "@nomicfoundation/hardhat-ethers": "^3.0.0",
+      "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+      "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+      "@nomicfoundation/hardhat-verify": "^1.0.0",
+      "@typechain/ethers-v6": "^0.4.0",
+      "@typechain/hardhat": "^8.0.0",
+      "chai": "^4.2.0",
+      "ethers": "^6.4.0",
+      "hardhat": "^2.14.0",
+      "hardhat-gas-reporter": "^1.0.8",
+      "prettier": "3.2.5",
+      "prettier-plugin-solidity": "^1.1.3",
+      "solidity-coverage": "^0.8.0",
+      "typechain": "^8.1.0"
+    },
+    "dependencies": {
+      "dotenv": "^16.3.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
