@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useWallet from "../../context/UseWallet";
-import {Records} from "../../ui/Records";
+import { Records } from "../../ui/Records";
+import { Button } from "@/components/ui/button";
 
-function ViewAppointment() {
+export default function ViewAppointment() {
   const { patientAddress } = useParams();
   const navigate = useNavigate();
-  
+
   const [records, setRecords] = useState(null);
   const { signer, contract, address } = useWallet();
 
   function handleCreateNewRecord() {
-      navigate(`/doctor/viewAppointments/create/${patientAddress}?type=new`);
+    navigate(`/doctor/create/${patientAddress}?type=new`);
   }
 
   useEffect(() => {
     (async function () {
       const newData = [];
 
-      let records = await contract.connect(signer).getRecordsWithAccess(patientAddress);
+      let records = await contract
+        .connect(signer)
+        .getRecordsWithAccess(patientAddress);
 
       console.log(records);
 
@@ -50,15 +53,13 @@ function ViewAppointment() {
   return (
     <>
       <h1>View Appointment</h1>
-      <button onClick={handleCreateNewRecord}>Create a new record</button>
+      <Button onClick={handleCreateNewRecord}>Create a new record</Button>
 
       <Records
-        recordsInfo={{ address, records }}
-        buttonTitle="Select"
+        address={address}
+        records={records}
         // buttonFunction={handleSelect}
       />
     </>
   );
 }
-
-export default ViewAppointment;

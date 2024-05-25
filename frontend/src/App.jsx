@@ -1,4 +1,9 @@
-import { BrowserRouter, createBrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/Dashboard";
 import AppLayout from "./ui/AppLayout";
@@ -14,10 +19,9 @@ import AllEmergencyRecords from "./pages/patient/AllEmergencyRecords";
 import BookAnAppointment from "./pages/patient/BookAnAppointment";
 
 function App() {
-
   return (
     <>
-      <WalletProvider>
+      {/* <WalletProvider>
           <BrowserRouter>
             <Routes>
               <Route
@@ -67,7 +71,7 @@ function App() {
               },
             }}
           />
-      </WalletProvider>
+      </WalletProvider> */}
     </>
   );
 }
