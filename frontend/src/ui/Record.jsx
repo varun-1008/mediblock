@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import { ipfsDownload } from "../utils/ipfs";
 import useWallet from "../context/UseWallet";
 import { Button } from "@/components/ui/button";
+import { useParams } from "react-router-dom/dist";
 
 function Record({ recordData }) {
   const [record, setRecord] = useState(null);
 
-  const { signer, contract } = useWallet();
+  const {patientAddress} = useParams();
+  console.log(patientAddress);
+
+  const { role, signer, contract } = useWallet();
 
   const { address, linkIndex, recordIndex } = recordData;
 
@@ -28,13 +32,17 @@ function Record({ recordData }) {
 
   useEffect(() => {
     (async function () {
+      const requiredAddress = role === 1 ? address : patientAddress;
+
       const data = await contract
         .connect(signer)
-        .getRecord(address, linkIndex, recordIndex);
+        .getRecord(requiredAddress, linkIndex, recordIndex);
 
-      const isEmergency = await contract
-        .connect(signer)
-        .isEmergencyRecord(linkIndex, recordIndex);
+      let isEmergency;
+      if(role === 1)
+        isEmergency = await contract
+          .connect(signer)
+          .isEmergencyRecord(linkIndex, recordIndex);
 
       const title = data[0];
       const time = data[1];
@@ -47,14 +55,14 @@ function Record({ recordData }) {
         time,
         content,
         image,
-        isEmergency,
       };
 
-      record;
+      if(role === 1)
+          dataObj["isEmergency"] = isEmergency;
 
       setRecord(dataObj);
     })();
-  }, []);
+  }, [role, signer, address, contract, linkIndex, patientAddress, recordIndex]);
 
   if (record === null) return <h1>Loading</h1>;
 
@@ -69,7 +77,7 @@ function Record({ recordData }) {
         {record.image && (
           <img src={`data:image/png;base64,${record.image}`}></img>
         )}
-        {
+        {role === 1 && 
           <Button onClick={handleEmergency} className="w-full bg-destructive">
             {record.isEmergency
               ? "Remove from Emergency Record"

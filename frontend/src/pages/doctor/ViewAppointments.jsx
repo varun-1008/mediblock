@@ -12,7 +12,7 @@ function ViewAppointments() {
 
   function handleViewAppointment(patientAddress) {
     console.log(patientAddress);
-    navigate(`${patientAddress}`);
+    navigate(`/doctor/viewAppointment/${patientAddress}`);
   }
 
   async function handleRemove(patientAddress) {
@@ -57,7 +57,7 @@ function ViewAppointments() {
                 </div>
                 <div className="h-full flex flex-col">
                   <span className="font-medium flex items-end gap-1">
-                    <p>{(patient.gender = "M" ? "Mr." : "Mrs.")}</p>
+                    <p>{(patient.gender === "M" ? "Mr." : "Mrs.")}</p>
                     <p>{patient.name}</p>
                   </span>
                   <span className="text-zinc-400">{patient.email}</span>

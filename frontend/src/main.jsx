@@ -74,7 +74,7 @@ const router = createBrowserRouter([
             element: <ViewAppointments />,
           },
           {
-            path: "viewAppointments/:patientAddress",
+            path: "viewAppointment/:patientAddress",
             element: <ViewAppointment />,
           },
           {

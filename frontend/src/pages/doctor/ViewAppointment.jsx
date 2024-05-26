@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useWallet from "../../context/UseWallet";
 import { Records } from "../../ui/Records";
 import { Button } from "@/components/ui/button";
+import CreateRecord from "./CreateRecord";
+import { Plus } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 export default function ViewAppointment() {
-  const { patientAddress } = useParams();
-  const navigate = useNavigate();
-
   const [records, setRecords] = useState(null);
-  const { signer, contract, address } = useWallet();
+  const [type, setType] = useState(null);
+  const [linkIndex, setLinkIndex] = useState(null);
 
-  function handleCreateNewRecord() {
-    navigate(`/doctor/create/${patientAddress}?type=new`);
-  }
+  const { signer, contract, address } = useWallet();
+  const { patientAddress } = useParams();
 
   useEffect(() => {
     (async function () {
@@ -22,8 +22,6 @@ export default function ViewAppointment() {
       let records = await contract
         .connect(signer)
         .getRecordsWithAccess(patientAddress);
-
-      console.log(records);
 
       const titles = records[0];
       const timestamps = records[1];
@@ -48,18 +46,39 @@ export default function ViewAppointment() {
     })();
   }, [patientAddress, signer, contract]);
 
+  function handleSelect(linkIndex) {
+    setType('existing');
+    setLinkIndex(linkIndex);
+  }
+
   if (records === null) return <h1>Loading</h1>;
 
   return (
     <>
       <h1>View Appointment</h1>
-      <Button onClick={handleCreateNewRecord}>Create a new record</Button>
+      <Button onClick={() => setType("new")}>Create a new record</Button>
 
       <Records
         address={address}
         records={records}
-        // buttonFunction={handleSelect}
+        Element={Element}
+        elementFunction={handleSelect}
       />
+
+      {type && <CreateRecord type={type} setType={setType} linkIndex={linkIndex} />}
+    </>
+  );
+}
+
+function Element({ isSelected, linkIndex, elementFunction }) {
+  return (
+    <>
+      <div className="flex items-center gap-2 select-none">
+        <Button onClick={() => elementFunction(linkIndex)}>
+          {isSelected ? <Plus /> : <Plus />}
+        </Button>
+        <Label className="flex items-center gap-2">Create record</Label>
+      </div>
     </>
   );
 }

@@ -1,10 +1,6 @@
-import React from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -12,6 +8,7 @@ import Record from "@/ui/Record";
 import { ArrowRight } from "lucide-react";
 
 export const RecordTimeline = ({ linkRecords, address }) => {
+
   return (
     <div className="flex flex-wrap gap-1">
       {linkRecords.map((record, recordIndex) => (

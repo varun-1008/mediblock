@@ -25,9 +25,9 @@ export const ActiveAppointments = ({ data, role }) => {
         <div>
           <p className="text-sm">
             You have{" "}
-            <span className="text-[#FE686B]">{data.numberOfAppointments} </span>{" "}
+            <span className="text-[#FE686B]">{data.numberOfActiveAppointments} </span>{" "}
             active {role === 1 ? "appointment" : "consultation"}
-            {data.numberOfAppointments !== 1 && "s"}
+            {data.numberOfActiveAppointments !== 1 && "s"}
           </p>
         </div>
       </div>

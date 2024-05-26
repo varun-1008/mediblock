@@ -26,6 +26,7 @@ export async function ipfsUpload(text) {
 }
 
 export async function ipfsDownload(cid) {
-    const res = await axios.get(`https://ipfs.io/ipfs/${cid}`);
+    // const res = await axios.get(`https://ipfs.io/ipfs/${cid}`);
+    const res = await axios.get(`https://salmon-persistent-ox-513.mypinata.cloud/ipfs/${cid}`);
     return res.data;
 }

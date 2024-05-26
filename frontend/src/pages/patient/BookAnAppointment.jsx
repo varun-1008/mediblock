@@ -5,6 +5,7 @@ import { Records } from "../../ui/Records";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 export default function BookAnAppointment() {
   const { doctorAddress } = useParams();
@@ -83,7 +84,9 @@ export default function BookAnAppointment() {
       <Records
         address={address}
         records={records}
-        buttonFunction={handleSelect}
+        selected={selected}
+        Element={Element}
+        elementFunction={handleSelect}
       />
       <div className="w-full flex justify-end">
         <Button
@@ -96,5 +99,20 @@ export default function BookAnAppointment() {
         </Button>
       </div>
     </div>
+  );
+}
+
+function Element({ isSelected, linkIndex, elementFunction }) {
+  return (
+    <>
+      <div className="flex items-center gap-2 select-none">
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={() => elementFunction(linkIndex)}
+        />
+        <Label className="flex items-center gap-2">{isSelected ? 'Unselect' : 'Select'}</Label>
+      </div>
+    </>
   );
 }
