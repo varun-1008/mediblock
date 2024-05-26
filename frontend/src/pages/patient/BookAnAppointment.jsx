@@ -55,15 +55,14 @@ export default function BookAnAppointment() {
       const length = titles.length;
 
       for (let i = 0; i < length; ++i) {
-        let access = await contract.connect(signer).hasAccess(doctorAddress, i);
-        if(access)  continue;
         const recordObj = {
           title: titles[i],
           time: timestamps[i],
           linkIndex: Number(linkIndices[i]),
           recordIndex: Number(recordIndices[i]),
         };
-
+        let access = await contract.connect(signer).hasAccess(doctorAddress, linkIndices[i]);
+        if(access)  continue;
         if (newData[linkIndices[i]] === undefined) newData[linkIndices[i]] = [];
         newData[linkIndices[i]].push(recordObj);
       }
