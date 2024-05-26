@@ -1,8 +1,8 @@
 import { ActiveAppointments } from "@/components/ActiveAppointments";
 import { TotalAppointments } from "@/components/TotalAppointments";
 import { TotalRecords } from "@/components/TotalRecords";
-import { UserDetails } from "@/components/UserDetails";
 import useWallet from "@/context/UseWallet";
+import RevokeAccess from "@/ui/RevokeAccess";
 import { doctorInfoCid } from "@/utils/doctor";
 import { ipfsDownload } from "@/utils/ipfs";
 import { patientInfoCid } from "@/utils/patient";
@@ -36,10 +36,10 @@ function Dashboard() {
 
         if (role === 2) {
           data["numberOfRecords"] = Number(
-            await contract.connect(signer).getNumberOfRecordsDoctor()
+            await contract.connect(signer).getNumberOfRecordsDoctor(address)
           );
           data["numberOfAppointments"] = Number(
-            await contract.connect(signer).getNumberOfAppointmentsDoctor()
+            await contract.connect(signer).getNumberOfAppointmentsDoctor(address)
           );
           data["numberOfActiveAppointments"] = Number(
             await contract.connect(signer).getNumberOfActiveAppointmentsDoctor()
@@ -48,7 +48,7 @@ function Dashboard() {
         setData(data);
       }
     })();
-  }, []);
+  }, [address, contract, role, signer]);
 
   return (
     <div className="space-y-10">
@@ -57,6 +57,8 @@ function Dashboard() {
         <TotalRecords data={data} role={role} />
         <TotalAppointments data={data} role={role} />
         <ActiveAppointments data={data} role={role} />
+
+        {role === 1 && <RevokeAccess />}
       </div>
     </div>
   );
