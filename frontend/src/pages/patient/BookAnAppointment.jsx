@@ -4,7 +4,7 @@ import useWallet from "../../context/UseWallet";
 import { Records } from "../../ui/Records";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import { Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 
 export default function BookAnAppointment() {
@@ -48,6 +48,7 @@ export default function BookAnAppointment() {
       const newData = [];
 
       let records = await contract.connect(signer).getRecords();
+
       const titles = records[0];
       const timestamps = records[1];
       const linkIndices = records[2];
@@ -61,6 +62,7 @@ export default function BookAnAppointment() {
           linkIndex: Number(linkIndices[i]),
           recordIndex: Number(recordIndices[i]),
         };
+        
         let access = await contract.connect(signer).hasAccess(doctorAddress, linkIndices[i]);
         if(access)  continue;
         if (newData[linkIndices[i]] === undefined) newData[linkIndices[i]] = [];
@@ -75,11 +77,17 @@ export default function BookAnAppointment() {
 
   return (
     <div className="space-y-10">
-      <div className="">
-        <h1 className="font-medium">Grant Access</h1>
-        <p className="text-zinc-400 text-sm">
-          Select a record/s to share with Dr. {doctorName}
-        </p>
+      <div className="space-y-5">
+        <Button variant="outline" className="p-2 flex items-center gap-1" onClick = {()=>navigate(-1)}>
+          <ArrowLeft size={20} />
+          Go Back
+        </Button>
+        <div className="">
+          <h1 className="font-medium">Grant Access</h1>
+          <p className="text-zinc-400 text-sm">
+            Select a record/s to share with Dr. {doctorName}
+          </p>
+        </div>
       </div>
       <Records
         address={address}
@@ -111,7 +119,9 @@ function Element({ isSelected, linkIndex, elementFunction }) {
           checked={isSelected}
           onChange={() => elementFunction(linkIndex)}
         />
-        <Label className="flex items-center gap-2">{isSelected ? 'Unselect' : 'Select'}</Label>
+        <Label className="flex items-center gap-2">
+          {isSelected ? "Unselect" : "Select"}
+        </Label>
       </div>
     </>
   );

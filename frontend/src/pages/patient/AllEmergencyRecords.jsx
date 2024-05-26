@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
-import Modal from "../../ui/Modal";
-import Record from "../../ui/Record";
+
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import Record from "@/ui/Record";
 
 function AllEmergencyRecords() {
   const [emergencyRecords, setEmergencyRecords] = useState(null);
-  const [selected, setSeleted] = useState(null);
   const { signer, contract, address } = useWallet();
-
-  function onClose() {
-    setSeleted(null);
-  }
 
   useEffect(() => {
     (async function () {
@@ -53,22 +51,42 @@ function AllEmergencyRecords() {
           </p>
         )}
       </div>
-
-      {emergencyRecords.map((linkRecords) => {
-        return linkRecords.map((record) => {
-          return (
-            <div key={record.time} onClick={() => setSeleted(record)}>
-              <p>{record.title}</p>
-            </div>
-          );
-        });
-      })}
-
-      {selected && (
-        <Modal onClose={onClose}>
-          <Record recordData={{ address, ...selected }} />
-        </Modal>
-      )}
+      <div className="w-full grid grid-cols-5 gap-10">
+        {emergencyRecords.map((linkRecords) => {
+          return linkRecords.map((record, index) => {
+            return (
+              <div
+                key={index}
+                className="border select-none bg-white rounded-lg overflow-hidden"
+              >
+                <div className="px-5 py-4 border-b w-full flex items-center justify-center">
+                  <p className="font-medium leading-none w-max">
+                    {record.title}
+                  </p>
+                </div>
+                <div className="flex w-full">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="w-full rounded-none bg-blue-500 hover:bg-blue-500/90 h-max p-3">
+                        View
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <div className="">
+                        <h1 className="font-medium">Record Details</h1>
+                        <p className="text-sm text-zinc-400">
+                          Details of the selected record
+                        </p>
+                      </div>
+                      <Record recordData={{ address, ...record }} />
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </div>
+            );
+          });
+        })}
+      </div>
     </div>
   );
 }
