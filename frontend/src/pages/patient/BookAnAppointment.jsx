@@ -71,7 +71,7 @@ export default function BookAnAppointment() {
 
       setRecords(newData);
     })();
-  }, [signer, contract]);
+  }, [signer, contract, doctorAddress]);
 
   if (records === null) return <h1>Loading</h1>;
 

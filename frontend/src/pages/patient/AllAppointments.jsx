@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
-import { ArrowRightCircle, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 function AllAppointments() {

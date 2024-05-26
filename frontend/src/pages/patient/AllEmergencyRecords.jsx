@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -10,9 +10,8 @@ function AllEmergencyRecords() {
   const [emergencyRecords, setEmergencyRecords] = useState(null);
   const { signer, contract, address } = useWallet();
 
-  useEffect(() => {
-    (async function () {
-      const newData = [];
+  const getData = useCallback(async () => {
+    const newData = [];
 
       let records = await contract.connect(signer).getEmergencyRecords(address);
 
@@ -34,9 +33,20 @@ function AllEmergencyRecords() {
         newData[linkIndices[i]].push(recordObj);
       }
       setEmergencyRecords(newData);
+  }, [signer, contract, address])
+
+  async function handleEmergencyChange() {
+    await getData();
+  }
+
+  useEffect(() => {
+    (async function () {
+      getData()
     })();
-  }, [emergencyRecords, signer, contract]);
+  }, [getData]);
+
   if (!emergencyRecords) return <h1>Loading</h1>;
+
   return (
     <div className="space-y-10">
       <div>
@@ -47,7 +57,7 @@ function AllEmergencyRecords() {
           </p>
         ) : (
           <p className="text-sm text-zinc-400">
-            List of all the records you've marked as emergency record
+            List of all the records you&apos;ve marked as emergency record
           </p>
         )}
       </div>
@@ -78,7 +88,7 @@ function AllEmergencyRecords() {
                           Details of the selected record
                         </p>
                       </div>
-                      <Record recordData={{ address, ...record }} />
+                      <Record recordData={{ address, ...record }} handleEmergencyChange={handleEmergencyChange} />
                     </DialogContent>
                   </Dialog>
                 </div>

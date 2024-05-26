@@ -4,7 +4,7 @@ import useWallet from "../context/UseWallet";
 import { Button } from "@/components/ui/button";
 import { useParams } from "react-router-dom/dist";
 
-function Record({ recordData }) {
+function Record({ recordData, handleEmergencyChange }) {
   const [record, setRecord] = useState(null);
 
   const { patientAddress } = useParams();
@@ -26,6 +26,9 @@ function Record({ recordData }) {
         .addEmergencyRecord(linkIndex, recordIndex);
 
     await tx.wait();
+
+    if(handleEmergencyChange)
+      await handleEmergencyChange();
 
     await getData();
   }
