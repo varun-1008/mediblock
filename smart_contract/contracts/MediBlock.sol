@@ -298,8 +298,8 @@ contract MediBlock {
         return patient.appointedDoctors.length;
     }
 
-    function getNumberOfAppointmentsDoctor() public view isDoctor(msg.sender) returns (uint){
-        IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
+    function getNumberOfAppointmentsDoctor(address _doctor) public view returns (uint){
+        IterableMappingDoctor.Doctor storage doctor = doctors.get(_doctor);
         return (doctor.numberOfAppointments - doctor.appointments.length);
     }
 
@@ -376,6 +376,23 @@ contract MediBlock {
             }
         }
         return (titleList, dateList, linkIndices, recordIndices);
+    }
+
+    /**
+     * @notice get all doctors address with access to a link
+     * @param linkIndex link index
+     * @return doctorArr array
+     */
+    function getDoctorListWithLinkAccess(
+        uint linkIndex
+    ) public view isPatient(msg.sender) returns (address[] memory){
+        IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
+        uint accessLen = patient.access[linkIndex].length;
+        address[] memory doctorArr = new address[](accessLen);
+        for(uint i = 0; i < accessLen; i++){
+            doctorArr[i] = patient.access[linkIndex][i].addr;
+        }
+        return doctorArr;
     }
 
     // ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
@@ -525,8 +542,8 @@ contract MediBlock {
         return patient.numberOfRecords;
     }
 
-    function getNumberOfRecordsDoctor() public view isDoctor(msg.sender) returns (uint) {
-        IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
+    function getNumberOfRecordsDoctor(address _doctor) public view returns (uint) {
+        IterableMappingDoctor.Doctor storage doctor = doctors.get(_doctor);
         return doctor.numberOfRecords;
     }
 
