@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ipfsDownload } from "../utils/ipfs";
 import useWallet from "../context/UseWallet";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom/dist";
 function Record({ recordData }) {
   const [record, setRecord] = useState(null);
 
-  const {patientAddress} = useParams();
+  const { patientAddress } = useParams();
   console.log(patientAddress);
 
   const { role, signer, contract } = useWallet();
@@ -27,42 +27,45 @@ function Record({ recordData }) {
 
     await tx.wait();
 
-    setRecord(null);
+    await getData();
   }
+
+  const getData = useCallback(async () => {
+    const requiredAddress = role === 1 ? address : patientAddress;
+
+    const data = await contract
+      .connect(signer)
+      .getRecord(requiredAddress, linkIndex, recordIndex);
+
+    let isEmergency;
+    if (role === 1)
+      isEmergency = await contract
+        .connect(signer)
+        .isEmergencyRecord(linkIndex, recordIndex);
+
+    const title = data[0];
+    const time = data[1];
+    const cid = data[2];
+
+    const { content, image } = await ipfsDownload(cid);
+
+    const dataObj = {
+      title,
+      time,
+      content,
+      image,
+    };
+
+    if (role === 1) dataObj["isEmergency"] = isEmergency;
+
+    setRecord(dataObj);
+  }, [role, signer, address, contract, linkIndex, patientAddress, recordIndex]);
 
   useEffect(() => {
     (async function () {
-      const requiredAddress = role === 1 ? address : patientAddress;
-
-      const data = await contract
-        .connect(signer)
-        .getRecord(requiredAddress, linkIndex, recordIndex);
-
-      let isEmergency;
-      if(role === 1)
-        isEmergency = await contract
-          .connect(signer)
-          .isEmergencyRecord(linkIndex, recordIndex);
-
-      const title = data[0];
-      const time = data[1];
-      const cid = data[2];
-
-      const { content, image } = await ipfsDownload(cid);
-
-      const dataObj = {
-        title,
-        time,
-        content,
-        image,
-      };
-
-      if(role === 1)
-          dataObj["isEmergency"] = isEmergency;
-
-      setRecord(dataObj);
+      await getData();
     })();
-  }, [role, signer, address, contract, linkIndex, patientAddress, recordIndex]);
+  }, [getData]);
 
   if (record === null) return <h1>Loading</h1>;
 
@@ -77,13 +80,13 @@ function Record({ recordData }) {
         {record.image && (
           <img src={`data:image/png;base64,${record.image}`}></img>
         )}
-        {role === 1 && 
+        {role === 1 && (
           <Button onClick={handleEmergency} className="w-full bg-destructive">
             {record.isEmergency
               ? "Remove from Emergency Record"
               : "Mark as an Emergency Record"}
           </Button>
-        }
+        )}
       </div>
     </div>
   );
