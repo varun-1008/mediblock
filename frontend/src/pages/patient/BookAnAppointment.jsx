@@ -48,7 +48,6 @@ export default function BookAnAppointment() {
       const newData = [];
 
       let records = await contract.connect(signer).getRecords();
-
       const titles = records[0];
       const timestamps = records[1];
       const linkIndices = records[2];
@@ -56,6 +55,8 @@ export default function BookAnAppointment() {
       const length = titles.length;
 
       for (let i = 0; i < length; ++i) {
+        let access = await contract.connect(signer).hasAccess(doctorAddress, i);
+        if(access)  continue;
         const recordObj = {
           title: titles[i],
           time: timestamps[i],

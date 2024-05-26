@@ -504,6 +504,7 @@ contract MediBlock {
         
         patient.numberOfRecords = patient.numberOfRecords + 1;
         doctor.numberOfRecords = doctor.numberOfRecords + 1;
+        removeAppointment(_patient);
     }
 
     /**
@@ -535,6 +536,7 @@ contract MediBlock {
 
         patient.numberOfRecords = patient.numberOfRecords + 1;
         doctor.numberOfRecords = doctor.numberOfRecords + 1;
+        removeAppointment(_patient);
     }
 
     function getNumberOfRecordsPatient() public view isPatient(msg.sender) returns (uint) {
