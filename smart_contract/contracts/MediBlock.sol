@@ -350,6 +350,23 @@ contract MediBlock {
         return (titleList, dateList, linkIndices, recordIndices);
     }
 
+    /**
+     * @notice get all doctors address with access to a link
+     * @param linkIndex link index
+     * @return doctorArr array
+     */
+    function getDoctorListWithLinkAccess(
+        uint linkIndex
+    ) public view isPatient(msg.sender) returns (address[] memory){
+        IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
+        uint accessLen = patient.access[linkIndex].length;
+        address[] memory doctorArr = new address[](accessLen);
+        for(uint i = 0; i < accessLen; i++){
+            doctorArr[i] = patient.access[linkIndex][i].addr;
+        }
+        return doctorArr;
+    }
+
     // ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
     // ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖  Doctor  ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
     // ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
