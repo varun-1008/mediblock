@@ -290,7 +290,7 @@ contract MediBlock {
 
     function getNumberOfAppointmentsPatient() public view isPatient(msg.sender) returns (uint){
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
-        return (patient.numberOfAppointments - patient.appointedDoctors.length);
+        return patient.numberOfAppointments;
     }
 
     function getNumberOfActiveAppointmentsPatient() public view isPatient(msg.sender) returns (uint){
@@ -300,7 +300,7 @@ contract MediBlock {
 
     function getNumberOfAppointmentsDoctor() public view isDoctor(msg.sender) returns (uint){
         IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
-        return (doctor.numberOfAppointments - doctor.appointments.length);
+        return doctor.numberOfAppointments;
     }
 
     function getNumberOfActiveAppointmentsDoctor() public view isDoctor(msg.sender) returns (uint){
@@ -487,8 +487,6 @@ contract MediBlock {
         
         patient.numberOfRecords = patient.numberOfRecords + 1;
         doctor.numberOfRecords = doctor.numberOfRecords + 1;
-
-        removeAppointment(_patient);
     }
 
     /**
@@ -520,8 +518,6 @@ contract MediBlock {
 
         patient.numberOfRecords = patient.numberOfRecords + 1;
         doctor.numberOfRecords = doctor.numberOfRecords + 1;
-
-        removeAppointment(_patient);
     }
 
     function getNumberOfRecordsPatient() public view isPatient(msg.sender) returns (uint) {
