@@ -19,6 +19,8 @@ import { Toaster } from "react-hot-toast";
 import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import ViewAppointment from "./pages/doctor/ViewAppointment";
+import { EmergencyRecords } from "./pages/doctor/EmergencyRecords";
+import EmergencyRecordDetails from "./pages/doctor/EmergencyRecordDetails";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +78,14 @@ const router = createBrowserRouter([
           {
             path: "viewAppointment/:patientAddress",
             element: <ViewAppointment />,
+          },
+          {
+            path: "emergencyRecords",
+            element: <EmergencyRecords />,
+          },
+          {
+            path: "emergencyRecords/:patientAddress",
+            element: <EmergencyRecordDetails />,
           },
           {
             path: "create/:patientAddress",
