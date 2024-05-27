@@ -15,7 +15,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 const navLinks = {
   0: [
@@ -62,6 +62,11 @@ const navLinks = {
       to: "/doctor/viewAppointments",
       label: "View Appointments",
       icon: <Newspaper size={20} strokeWidth={2} />,
+    },
+    {
+      to: "/doctor/emergencyRecords",
+      label: "Emergency Records",
+      icon: <Ambulance size={20} strokeWidth={2} />,
     },
   ],
 };

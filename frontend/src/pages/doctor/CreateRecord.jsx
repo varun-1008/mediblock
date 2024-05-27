@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import useWallet from "../../context/UseWallet";
-import { ipfsUpload } from "../../utils/ipfs";
+import useWallet from "@/context/UseWallet";
+import { ipfsUpload } from "@/utils/ipfs";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
