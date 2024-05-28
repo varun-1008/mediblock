@@ -94,7 +94,11 @@ function RevokeAccess() {
                   className="w-full p-2 rounded-lg border flex items-center justify-between"
                 >
                   <p className="font-medium">Dr. {doctor.name}</p>
-                  <Button variant="destructive" className="font-normal">
+                  <Button
+                    variant="destructive"
+                    className="font-normal"
+                    onClick={() => handleRemoveAccess(doctor.address)}
+                  >
                     <X size={15} className="mr-2" />
                     Remove Access
                   </Button>
