@@ -75,7 +75,7 @@ function RevokeAccess() {
   if (!records) return <h1>Loading</h1>;
 
   return (
-    <div className="rounded-xl px-10 py-8 bg-white space-y-5">
+    <div className="rounded-xl px-10 py-8 pb-14 bg-white space-y-5">
       <h1 className="font-medium">Manage Access</h1>
       <Records
         address={address}
