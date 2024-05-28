@@ -7,6 +7,8 @@ import {
 import { RecordTimeline } from "@/components/RecordTimeline";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
+import { useResolvedPath } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 export function Records({
   address,
@@ -15,13 +17,21 @@ export function Records({
   Element,
   elementFunction,
 }) {
+  const pathname = useResolvedPath().pathname;
+  const isDashboardPage = pathname === "/dashboard";
+
   return (
     <div className="space-y-5">
       <Accordion type="single" collapsible className="w-full">
         {records.map((linkRecords, index) => (
           <AccordionItem key={index} value={`item-${index}`}>
             <AccordionTrigger>
-              <div className="flex gap-1 text-base font-medium">
+              <div
+                className={cn(
+                  "flex gap-1 text-base font-medium",
+                  isDashboardPage && "font-normal"
+                )}
+              >
                 {linkRecords[0].title}
                 {selected?.includes(linkRecords[0].linkIndex) && (
                   <Badge className="bg-emerald-500 ml-2 hover:bg-emerald-500/90 gap-1">

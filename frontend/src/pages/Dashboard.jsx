@@ -39,7 +39,9 @@ function Dashboard() {
             await contract.connect(signer).getNumberOfRecordsDoctor(address)
           );
           data["numberOfAppointments"] = Number(
-            await contract.connect(signer).getNumberOfAppointmentsDoctor(address)
+            await contract
+              .connect(signer)
+              .getNumberOfAppointmentsDoctor(address)
           );
           data["numberOfActiveAppointments"] = Number(
             await contract.connect(signer).getNumberOfActiveAppointmentsDoctor()
@@ -57,9 +59,8 @@ function Dashboard() {
         <TotalRecords data={data} role={role} />
         <TotalAppointments data={data} role={role} />
         <ActiveAppointments data={data} role={role} />
-
-        {role === 1 && <RevokeAccess />}
       </div>
+      <div className="w-full">{role === 1 && <RevokeAccess />}</div>
     </div>
   );
 }
