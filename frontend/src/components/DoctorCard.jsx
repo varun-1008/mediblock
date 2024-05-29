@@ -4,9 +4,8 @@ import { Button } from "./ui/button";
 import useWallet from "@/context/UseWallet";
 
 const DoctorCard = ({ doctor, handleBook }) => {
-  const { contract, signer } = useWallet();
+  const { contract, signer, role } = useWallet();
   const [totalConsultations, setTotalConsultations] = useState(0);
-  // fetch total consultations on mount
   useEffect(() => {
     (async function () {
       const consultations = Number(
@@ -17,6 +16,7 @@ const DoctorCard = ({ doctor, handleBook }) => {
       setTotalConsultations(consultations);
     })();
   }, []);
+
   return (
     <div className="bg-white rounded-lg border h-max">
       <div className="p-4 space-y-4">
@@ -24,7 +24,11 @@ const DoctorCard = ({ doctor, handleBook }) => {
           <div className="flex items-center gap-2">
             <div className="rounded-full h-10 overflow-hidden aspect-square">
               <img
-                src="/images/doctor.jpeg"
+                src={
+                  doctor.gender === "M"
+                    ? "/images/doctor-male.jpg"
+                    : "/images/doctor-female.jpg"
+                }
                 className="object-cover h-12 w-12"
               />
             </div>
@@ -38,7 +42,6 @@ const DoctorCard = ({ doctor, handleBook }) => {
           </div>
         </div>
         <div className="h-px bg-zinc-200" />
-        {/* Incomplete */}
         <div className="w-full px-2">
           <p className="">
             {totalConsultations}{" "}

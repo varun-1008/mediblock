@@ -66,15 +66,23 @@ function SharedRecords() {
           List of all the patients who've shared their records with you
         </p>
       </div>
-      <div className="w-full grid grid-cols-3 gap-10">
-        {patients.map((patient, index) => (
-          <PatientCard
-            key={index}
-            patient={patient}
-            handleViewRecords={handleViewRecords}
-          />
-        ))}
-      </div>
+      {patients.length > 0 ? (
+        <div className="w-full grid grid-cols-3 gap-10">
+          {patients.map((patient, index) => (
+            <PatientCard
+              key={index}
+              patient={patient}
+              handleViewRecords={handleViewRecords}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="h-44 flex items-center justify-center">
+          <p className="text-zinc-400">
+            Patients are not sharing their records with you currently
+          </p>
+        </div>
+      )}
     </div>
   );
 }

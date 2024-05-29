@@ -46,18 +46,32 @@ export const UserButton = () => {
     return null;
   }
 
+  let imageSrc = "";
+  if (role === 1) {
+    if (data.gender === "M") imageSrc = "/images/patient-male.jpg";
+    else imageSrc = "/images/patient-female.jpg";
+  } else if (role === 2) {
+    if (data.gender === "M") imageSrc = "/images/doctor-male.jpg";
+    else imageSrc = "/images/doctor-female.jpg";
+  }
+
   return (
     <div className="flex justify-between w-full">
       <div className="flex items-center gap-3 h-full">
-        <Avatar className="flex items-center justify-center text-xl bg-blue-400 text-white">
-          {data.name[0]}
+        <Avatar className="flex items-center justify-center text-white">
+          <img src={imageSrc} className="object-cover aspect-square" />
         </Avatar>
         <div className="flex flex-col h-full justify-between flex-1">
-          <p className="text-sm font-medium">{role === 2 && "Dr."} {data.name}</p>
+          <p className="text-sm font-medium">
+            {role === 2 && "Dr."} {data.name}
+          </p>
           <TooltipProvider>
             <Tooltip>
               <div className="flex items-center gap-4">
-                <TooltipTrigger className="text-sm text-zinc-400 line-clamp-1 font-light hover:cursor-pointer" onClick={copyToClipboard}>
+                <TooltipTrigger
+                  className="text-sm text-zinc-400 line-clamp-1 font-light hover:cursor-pointer"
+                  onClick={copyToClipboard}
+                >
                   {abbreviatedAddress}
                 </TooltipTrigger>
               </div>

@@ -7,7 +7,6 @@ export const PatientCard = ({
   handleViewAppointment,
   handleViewRecords,
 }) => {
-  const navigate = useNavigate();
   return (
     <div className="bg-white rounded-lg border h-max max-w-sm w-full">
       <div className="p-4 space-y-4">
@@ -15,7 +14,11 @@ export const PatientCard = ({
           <div className="flex items-center gap-2">
             <div className="rounded-full h-10 overflow-hidden aspect-square">
               <img
-                src="/images/doctor.jpeg"
+                src={
+                  patient.gender === "M"
+                    ? "/images/patient-male.jpg"
+                    : "/images/patient-female.jpg"
+                }
                 className="object-cover h-12 w-12"
               />
             </div>
@@ -46,8 +49,8 @@ export const PatientCard = ({
             }
           }}
         >
-          <View size={20} />
-          <span>View</span>
+          <View size={20} strokeWidth={1.5} />
+          <span className="font-normal">View</span>
         </Button>
       </div>
     </div>

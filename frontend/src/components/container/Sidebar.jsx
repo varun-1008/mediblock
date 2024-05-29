@@ -78,11 +78,11 @@ const navLinks = {
 };
 
 const profileLinks = [
-  {
-    to: "/settings",
-    label: "Settings",
-    icon: <Settings size={20} strokeWidth={2} />,
-  },
+  // {
+  //   to: "/settings",
+  //   label: "Settings",
+  //   icon: <Settings size={20} strokeWidth={2} />,
+  // },
   {
     to: "/profile",
     label: "Profile",
