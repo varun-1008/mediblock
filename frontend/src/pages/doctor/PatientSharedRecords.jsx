@@ -2,6 +2,7 @@ import { GoBackButton } from "@/components/GoBackButton";
 import { LoadingState } from "@/components/LoadingState";
 import { RecordBlock } from "@/components/RecordBlock";
 import useWallet from "@/context/UseWallet";
+import { Records } from "@/ui/Records";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -33,7 +34,8 @@ function PatientSharedRecords() {
           recordIndex: recordIndices[i],
         };
 
-        data.push(recordObj);
+        if (data[linkIndices[i]] === undefined) data[linkIndices[i]] = [];
+        data[linkIndices[i]].push(recordObj);
       }
       setRecords(data);
     } catch (error) {
@@ -58,11 +60,12 @@ function PatientSharedRecords() {
           </p>
         </div>
       </div>
-      <div className="w-full grid grid-cols-5 gap-10">
+      {/* <div className="w-full grid grid-cols-5 gap-10">
         {records.map((record, index) => (
           <RecordBlock key={index} address={address} record={record} />
         ))}
-      </div>
+      </div> */}
+      <Records records={records} address={address} />
     </div>
   );
 }

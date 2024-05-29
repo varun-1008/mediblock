@@ -39,7 +39,10 @@ function RegisterPatient() {
 
   return (
     <div className="w-full">
-      <form onSubmit={handleSubmit(onSubmit, onError)} className="flex flex-col w-full space-y-5">
+      <form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        className="flex flex-col w-full space-y-5"
+      >
         <div className="space-y-2">
           <label>Name</label>
           <Input id="name" {...register("name")} />
@@ -59,7 +62,9 @@ function RegisterPatient() {
           <Input id="gender" {...register("gender")} />
         </div>
 
-        <Button className="w-full" size="lg">Create Account</Button>
+        <Button className="w-full bg-blue-500" size="lg">
+          Create Account
+        </Button>
       </form>
     </div>
   );

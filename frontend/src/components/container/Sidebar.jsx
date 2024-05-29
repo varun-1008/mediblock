@@ -10,6 +10,7 @@ import {
   LibraryBig,
   LogOut,
   Newspaper,
+  Plus,
   Radio,
   Settings,
   User,
@@ -97,8 +98,14 @@ export const Sidebar = () => {
   return (
     <aside className="flex flex-col justify-between items-center w-1/5 py-10 overflow-y-auto">
       <div className="flex flex-col gap-14 items-center w-9/12 h-full">
-        <Link className="text-2xl font-semibold leading-none" to="dashboard">
-          MediBlock
+        <Link
+          className="text-2xl font-semibold leading-none flex items-center gap-2.5"
+          to="dashboard"
+        >
+          <div className="rounded-full p-1 bg-blue-500">
+            <Plus className="text-white" strokeWidth={3.5} size={20} />
+          </div>
+          Mediblock
         </Link>
         <div className="space-y-5 w-full">
           <ul className="flex flex-col gap-1 w-full">
