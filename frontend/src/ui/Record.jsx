@@ -3,6 +3,7 @@ import { ipfsDownload } from "../utils/ipfs";
 import useWallet from "../context/UseWallet";
 import { Button } from "@/components/ui/button";
 import { useParams } from "react-router-dom/dist";
+import { LoadingState } from "@/components/LoadingState";
 
 function Record({ recordData, handleEmergencyChange }) {
   const [record, setRecord] = useState(null);
@@ -68,7 +69,7 @@ function Record({ recordData, handleEmergencyChange }) {
     })();
   }, [getData]);
 
-  if (record === null) return <h1>Loading</h1>;
+  if (record === null) return <LoadingState />;
 
   return (
     <div>

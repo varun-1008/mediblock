@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import Record from "@/ui/Record";
+import { LoadingState } from "@/components/LoadingState";
 
 function AllEmergencyRecords() {
   const [emergencyRecords, setEmergencyRecords] = useState(null);
@@ -45,61 +46,61 @@ function AllEmergencyRecords() {
     })();
   }, [getData]);
 
-  if (!emergencyRecords) return <h1>Loading</h1>;
+  if (!emergencyRecords) return <LoadingState />;
 
   return (
     <div className="space-y-10">
       <div>
         <h1 className="font-medium">Emergency Records</h1>
-        {emergencyRecords.length === 0 ? (
-          <p className="text-zinc-400 text-sm">
-            No records are marked as emergency record
-          </p>
-        ) : (
-          <p className="text-sm text-zinc-400">
-            List of all the records you&apos;ve marked as emergency record
-          </p>
-        )}
+        <p className="text-sm text-zinc-400">
+          List of all the records you&apos;ve marked as an emergency record
+        </p>
       </div>
-      <div className="w-full grid grid-cols-5 gap-10">
-        {emergencyRecords.map((linkRecords) => {
-          return linkRecords.map((record, index) => {
-            return (
-              <div
-                key={index}
-                className="border select-none bg-white rounded-lg overflow-hidden"
-              >
-                <div className="px-5 py-4 border-b w-full flex items-center justify-center">
-                  <p className="font-medium leading-none w-max">
-                    {record.title}
-                  </p>
+      {emergencyRecords.length === 0 ? (
+        <div className="h-44 flex items-center justify-center">
+          <p className="text-zinc-400">No emergency records found</p>
+        </div>
+      ) : (
+        <div className="w-full grid grid-cols-5 gap-10">
+          {emergencyRecords.map((linkRecords) => {
+            return linkRecords.map((record, index) => {
+              return (
+                <div
+                  key={index}
+                  className="border select-none bg-white rounded-lg overflow-hidden"
+                >
+                  <div className="px-5 py-4 border-b w-full flex items-center justify-center">
+                    <p className="font-medium leading-none w-max">
+                      {record.title}
+                    </p>
+                  </div>
+                  <div className="flex w-full">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button className="w-full rounded-none bg-blue-500 hover:bg-blue-500/90 h-max p-3">
+                          View
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md">
+                        <div className="">
+                          <h1 className="font-medium">Record Details</h1>
+                          <p className="text-sm text-zinc-400">
+                            Details of the selected record
+                          </p>
+                        </div>
+                        <Record
+                          recordData={{ address, ...record }}
+                          handleEmergencyChange={handleEmergencyChange}
+                        />
+                      </DialogContent>
+                    </Dialog>
+                  </div>
                 </div>
-                <div className="flex w-full">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button className="w-full rounded-none bg-blue-500 hover:bg-blue-500/90 h-max p-3">
-                        View
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
-                      <div className="">
-                        <h1 className="font-medium">Record Details</h1>
-                        <p className="text-sm text-zinc-400">
-                          Details of the selected record
-                        </p>
-                      </div>
-                      <Record
-                        recordData={{ address, ...record }}
-                        handleEmergencyChange={handleEmergencyChange}
-                      />
-                    </DialogContent>
-                  </Dialog>
-                </div>
-              </div>
-            );
-          });
-        })}
-      </div>
+              );
+            });
+          })}
+        </div>
+      )}
     </div>
   );
 }

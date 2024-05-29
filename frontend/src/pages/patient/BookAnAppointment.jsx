@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { Loader2, MessageCircleWarning } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { GoBackButton } from "@/components/GoBackButton";
+import { LoadingState } from "@/components/LoadingState";
 
 export default function BookAnAppointment() {
   const { doctorAddress } = useParams();
@@ -80,7 +81,7 @@ export default function BookAnAppointment() {
     })();
   }, [signer, contract, doctorAddress]);
 
-  if (records === null) return <h1>Loading</h1>;
+  if (records === null) return <LoadingState />;
 
   const allRecordsHaveAccess = records.length === 0 && hasAccess;
 

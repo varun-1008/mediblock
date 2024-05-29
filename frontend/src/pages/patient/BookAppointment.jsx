@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRightCircle, Mail, Phone } from "lucide-react";
 import DoctorCard from "@/components/DoctorCard";
+import { LoadingState } from "@/components/LoadingState";
 
 function BookAppointment() {
   const [doctors, setDoctors] = useState([]);
@@ -38,7 +39,7 @@ function BookAppointment() {
     })();
   }, [signer, contract]);
 
-  if (doctors.length === 0) return <h1>Loading...</h1>;
+  if (doctors.length === 0) return <LoadingState />;
 
   return (
     <div className="space-y-10">

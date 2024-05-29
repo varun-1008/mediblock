@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import CreateRecord from "./CreateRecord";
 import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { LoadingState } from "@/components/LoadingState";
 
 export default function ViewAppointment() {
   const [records, setRecords] = useState(null);
@@ -47,11 +48,11 @@ export default function ViewAppointment() {
   }, [patientAddress, signer, contract]);
 
   function handleSelect(linkIndex) {
-    setType('existing');
+    setType("existing");
     setLinkIndex(linkIndex);
   }
 
-  if (records === null) return <h1>Loading</h1>;
+  if (records === null) return <LoadingState />;
 
   return (
     <>
@@ -65,7 +66,9 @@ export default function ViewAppointment() {
         elementFunction={handleSelect}
       />
 
-      {type && <CreateRecord type={type} setType={setType} linkIndex={linkIndex} />}
+      {type && (
+        <CreateRecord type={type} setType={setType} linkIndex={linkIndex} />
+      )}
     </>
   );
 }

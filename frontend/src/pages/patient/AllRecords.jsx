@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { Records } from "@/ui/Records";
+import { LoadingState } from "@/components/LoadingState";
 
 function AllRecords() {
   const [records, setRecords] = useState(null);
@@ -34,7 +35,7 @@ function AllRecords() {
     })();
   }, [signer, contract]);
 
-  if (!records) return <h1>Loading</h1>;
+  if (!records) return <LoadingState />;
 
   return (
     <div className="space-y-10">

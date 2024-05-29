@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ipfsDownload } from "@/utils/ipfs";
 import { ArrowRight, Loader2, Trash2, X } from "lucide-react";
+import { LoadingState } from "@/components/LoadingState";
 
 function RevokeAccess({ thinTitle }) {
   const [records, setRecords] = useState(null);
@@ -72,7 +73,7 @@ function RevokeAccess({ thinTitle }) {
     await getDoctors(dialog);
   }
 
-  if (!records) return <h1>Loading</h1>;
+  if (!records) return <LoadingState />;
 
   return (
     <div className="rounded-xl px-10 py-8 pb-14 bg-white space-y-5">

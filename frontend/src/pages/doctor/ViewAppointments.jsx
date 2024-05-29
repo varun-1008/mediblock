@@ -4,6 +4,7 @@ import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
 import { Trash, View } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LoadingState } from "@/components/LoadingState";
 
 function ViewAppointments() {
   const [patients, setPatients] = useState(null);
@@ -39,7 +40,7 @@ function ViewAppointments() {
     })();
   }, [patients, signer, contract]);
 
-  if (patients === null) return <h1>Loading</h1>;
+  if (patients === null) return <LoadingState />;
 
   return (
     <>
@@ -57,7 +58,7 @@ function ViewAppointments() {
                 </div>
                 <div className="h-full flex flex-col">
                   <span className="font-medium flex items-end gap-1">
-                    <p>{(patient.gender === "M" ? "Mr." : "Mrs.")}</p>
+                    <p>{patient.gender === "M" ? "Mr." : "Mrs."}</p>
                     <p>{patient.name}</p>
                   </span>
                   <span className="text-zinc-400">{patient.email}</span>
