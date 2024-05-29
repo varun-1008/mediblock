@@ -42,7 +42,7 @@ function AllRecords() {
       <div>
         <h1 className="text-base font-medium">All Records</h1>
         <p className="text-zinc-400 text-sm">
-          List of all the secured records prescribed by the doctors.
+          List of all the secured records prescribed by the doctors
         </p>
       </div>
       <Records address={address} records={records} />

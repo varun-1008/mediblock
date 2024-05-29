@@ -46,7 +46,7 @@ function BookAppointment() {
       <div>
         <h1 className="font-medium">Book an Appointment</h1>
         <p className="text-sm text-zinc-400">
-          Select a doctor to book an appointment with.
+          Please choose a doctor to book an appointment
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-sm">
