@@ -4,12 +4,7 @@ import useWallet from "../../context/UseWallet";
 import { Records } from "../../ui/Records";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import {
-  ArrowLeft,
-  Loader2,
-  MessageCircleQuestion,
-  MessageCircleWarning,
-} from "lucide-react";
+import { Loader2, MessageCircleWarning } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { GoBackButton } from "@/components/GoBackButton";
 
