@@ -4,8 +4,14 @@ import useWallet from "../../context/UseWallet";
 import { Records } from "../../ui/Records";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Loader2,
+  MessageCircleQuestion,
+  MessageCircleWarning,
+} from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { GoBackButton } from "@/components/GoBackButton";
 
 export default function BookAnAppointment() {
   const { doctorAddress } = useParams();
@@ -13,6 +19,7 @@ export default function BookAnAppointment() {
   const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(false);
   const { signer, contract, address } = useWallet();
+  const [hasAccess, setHasAccess] = useState(false);
 
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -62,9 +69,14 @@ export default function BookAnAppointment() {
           linkIndex: Number(linkIndices[i]),
           recordIndex: Number(recordIndices[i]),
         };
-        
-        let access = await contract.connect(signer).hasAccess(doctorAddress, linkIndices[i]);
-        if(access)  continue;
+
+        let access = await contract
+          .connect(signer)
+          .hasAccess(doctorAddress, linkIndices[i]);
+        if (access) {
+          setHasAccess(true);
+          continue;
+        }
         if (newData[linkIndices[i]] === undefined) newData[linkIndices[i]] = [];
         newData[linkIndices[i]].push(recordObj);
       }
@@ -75,13 +87,12 @@ export default function BookAnAppointment() {
 
   if (records === null) return <h1>Loading</h1>;
 
+  const allRecordsHaveAccess = records.length === 0 && hasAccess;
+
   return (
     <div className="space-y-10">
       <div className="space-y-5">
-        <Button variant="outline" className="p-2 flex items-center gap-1" onClick = {()=>navigate(-1)}>
-          <ArrowLeft size={20} />
-          Go Back
-        </Button>
+        <GoBackButton />
         <div className="">
           <h1 className="font-medium">Grant Access</h1>
           <p className="text-zinc-400 text-sm">
@@ -89,23 +100,73 @@ export default function BookAnAppointment() {
           </p>
         </div>
       </div>
-      <Records
-        address={address}
-        records={records}
-        selected={selected}
-        Element={Element}
-        elementFunction={handleSelect}
-      />
-      <div className="w-full flex justify-end">
-        <Button
-          onClick={handleBook}
-          className="flex items-center gap-2 bg-blue-500"
-          disabled={loading}
-        >
-          {loading && <Loader2 className="animate-spin w-4 h-4" />} Book
-          Appointment
-        </Button>
-      </div>
+      {allRecordsHaveAccess ? (
+        <div className="rounded-lg bg-white p-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <MessageCircleWarning size={20} className="text-blue-500" />
+            <p className="text-zinc-400 text-sm">
+              The doctor has access to all of your{" "}
+              <span
+                className="underline underline-offset-4 cursor-pointer"
+                onClick={() => {
+                  navigate("/settings");
+                }}
+              >
+                {" "}
+                records
+              </span>{" "}
+              . Please book an appointment to continue.
+            </p>
+          </div>
+          <Button
+            onClick={handleBook}
+            className="flex items-center gap-2 bg-blue-500"
+            disabled={loading}
+          >
+            {loading && <Loader2 className="animate-spin w-4 h-4" />} Book
+            Appointment
+          </Button>
+        </div>
+      ) : (
+        <>
+          {hasAccess && (
+            <div className="rounded-lg bg-white p-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <MessageCircleWarning size={20} className="text-blue-500" />
+                <p className="text-zinc-400 text-sm">
+                  The doctor has access to some of your records. Manage them{" "}
+                  <span
+                    className="underline"
+                    onClick={() => {
+                      navigate("/settings");
+                    }}
+                  >
+                    {" "}
+                    here
+                  </span>
+                </p>
+              </div>
+            </div>
+          )}
+          <Records
+            address={address}
+            records={records}
+            selected={selected}
+            Element={Element}
+            elementFunction={handleSelect}
+          />
+          <div className="w-full flex justify-end">
+            <Button
+              onClick={handleBook}
+              className="flex items-center gap-2 bg-blue-500"
+              disabled={loading}
+            >
+              {loading && <Loader2 className="animate-spin w-4 h-4" />} Book
+              Appointment
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -114,12 +175,12 @@ function Element({ isSelected, linkIndex, elementFunction }) {
   return (
     <>
       <div className="flex items-center gap-2 select-none">
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={() => elementFunction(linkIndex)}
-        />
-        <Label className="flex items-center gap-2">
+        <Label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={() => elementFunction(linkIndex)}
+          />
           {isSelected ? "Unselect" : "Select"}
         </Label>
       </div>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import useWallet from "@/context/UseWallet";
 
-const DoctorCard = ({ doctor }) => {
+const DoctorCard = ({ doctor, handleBook }) => {
   const { contract, signer } = useWallet();
   const [totalConsultations, setTotalConsultations] = useState(0);
   // fetch total consultations on mount
@@ -18,7 +18,7 @@ const DoctorCard = ({ doctor }) => {
     })();
   }, []);
   return (
-    <div key={doctor.name} className="bg-white rounded-lg border h-max">
+    <div className="bg-white rounded-lg border h-max">
       <div className="p-4 space-y-4">
         <div className="flex justify-between h-full">
           <div className="flex items-center gap-2">
@@ -40,7 +40,7 @@ const DoctorCard = ({ doctor }) => {
         <div className="h-px bg-zinc-200" />
         {/* Incomplete */}
         <div className="w-full px-2">
-          <p>
+          <p className="">
             {totalConsultations}{" "}
             <span className="text-zinc-400">
               consultation{totalConsultations !== 1 && "s"} completed

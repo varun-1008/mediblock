@@ -8,7 +8,6 @@ function Record({ recordData, handleEmergencyChange }) {
   const [record, setRecord] = useState(null);
 
   const { patientAddress } = useParams();
-  console.log(patientAddress);
 
   const { role, signer, contract } = useWallet();
 
@@ -27,8 +26,7 @@ function Record({ recordData, handleEmergencyChange }) {
 
     await tx.wait();
 
-    if(handleEmergencyChange)
-      await handleEmergencyChange();
+    if (handleEmergencyChange) await handleEmergencyChange();
 
     await getData();
   }

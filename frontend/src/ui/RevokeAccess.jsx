@@ -6,7 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ipfsDownload } from "@/utils/ipfs";
 import { ArrowRight, Loader2, Trash2, X } from "lucide-react";
 
-function RevokeAccess() {
+function RevokeAccess({ thinTitle }) {
   const [records, setRecords] = useState(null);
   const [doctors, setDoctors] = useState(null);
   const [dialog, setDialog] = useState(null);
@@ -82,6 +82,7 @@ function RevokeAccess() {
         records={records}
         Element={Element}
         elementFunction={handleDialog}
+        thinTitle={thinTitle}
       />
       <Dialog open={dialog !== null} onOpenChange={() => setDialog(null)}>
         <DialogContent>

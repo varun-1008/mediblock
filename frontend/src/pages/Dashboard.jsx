@@ -60,7 +60,9 @@ function Dashboard() {
         <TotalAppointments data={data} role={role} />
         <ActiveAppointments data={data} role={role} />
       </div>
-      <div className="w-full">{role === 1 && <RevokeAccess />}</div>
+      <div className="w-full">
+        {role === 1 && <RevokeAccess thinTitle={true} />}
+      </div>
     </div>
   );
 }

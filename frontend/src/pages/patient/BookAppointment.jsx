@@ -50,7 +50,13 @@ function BookAppointment() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-sm">
         {doctors.map((doctor) => {
-          return <DoctorCard doctor={doctor} key={doctor.address} />;
+          return (
+            <DoctorCard
+              doctor={doctor}
+              key={doctor.address}
+              handleBook={handleBook}
+            />
+          );
         })}
       </div>
     </div>

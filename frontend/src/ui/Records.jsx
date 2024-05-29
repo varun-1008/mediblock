@@ -16,10 +16,8 @@ export function Records({
   selected,
   Element,
   elementFunction,
+  thinTitle,
 }) {
-  const pathname = useResolvedPath().pathname;
-  const isDashboardPage = pathname === "/dashboard";
-
   return (
     <div className="space-y-5">
       <Accordion type="single" collapsible className="w-full">
@@ -29,7 +27,7 @@ export function Records({
               <div
                 className={cn(
                   "flex gap-1 text-base font-medium",
-                  isDashboardPage && "font-normal"
+                  thinTitle && "font-normal"
                 )}
               >
                 {linkRecords[0].title}
