@@ -1,8 +1,7 @@
 import { PatientCard } from "@/components/PatientCard";
-import { Button } from "@/components/ui/button";
+import { SearchEmergencyInput } from "@/components/SearchEmergencyInput";
 import useWallet from "@/context/UseWallet";
 import { ipfsDownload } from "@/utils/ipfs";
-import { Phone, View } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +29,11 @@ export const EmergencyRecords = () => {
 
   const [patients, setPatients] = useState([]);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleInputOnChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   useEffect(() => {
     if (contract && signer) {
       fetchPatientsData(contract, signer, setPatients);
@@ -42,6 +46,19 @@ export const EmergencyRecords = () => {
     navigate(`${patientAddress}?${params.toString()}`);
   };
 
+  const filterPatients = (patients, searchQuery) => {
+    let filteredData = patients;
+    if (searchQuery) {
+      filteredData = filteredData.filter(
+        (patient) =>
+          patient.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
+      );
+    }
+    return filteredData;
+  };
+
+  const finalPatients = filterPatients(patients, searchQuery);
+
   return (
     <div className="space-y-10">
       <div>
@@ -50,15 +67,27 @@ export const EmergencyRecords = () => {
           List of emergency records of the patients
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        {patients.map((patient, i) => (
-          <PatientCard
-            key={i}
-            patient={patient}
-            handleViewAppointment={handleViewAppointment}
-            emergency={true}
-          />
-        ))}
+      <div className="space-y-5">
+        <SearchEmergencyInput
+          value={searchQuery}
+          handleInputOnChange={handleInputOnChange}
+        />
+        {finalPatients.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {finalPatients.map((patient, i) => (
+              <PatientCard
+                key={i}
+                patient={patient}
+                handleViewAppointment={handleViewAppointment}
+                emergency={true}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="h-40 flex items-center justify-center">
+            <p className="text-zinc-400">No results found</p>
+          </div>
+        )}
       </div>
     </div>
   );
