@@ -78,7 +78,7 @@ const profileLinks = [
     icon: <Settings size={20} strokeWidth={2} />,
   },
   {
-    to: "/profiles",
+    to: "/profile",
     label: "Profile",
     icon: <User size={20} strokeWidth={2} />,
   },

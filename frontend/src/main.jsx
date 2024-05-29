@@ -21,6 +21,7 @@ import Settings from "./pages/Settings";
 import ViewAppointment from "./pages/doctor/ViewAppointment";
 import { EmergencyRecords } from "./pages/doctor/EmergencyRecords";
 import EmergencyRecordDetails from "./pages/doctor/EmergencyRecordDetails";
+import ProfilePage from "./pages/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <Settings />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
       },
     ],
   },
