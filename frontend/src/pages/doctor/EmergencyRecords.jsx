@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 const fetchPatientsData = async (contract, signer, setPatients) => {
   const newData = [];
-
   try {
     const patientAddresses = await contract.connect(signer).getPatients();
 
@@ -38,7 +37,9 @@ export const EmergencyRecords = () => {
   }, [contract, signer]);
 
   const handleViewAppointment = (patientAddress, patientName) => {
-    navigate(`${patientAddress}`, { state: { name: patientName } });
+    const params = new URLSearchParams();
+    params.append("name", patientName);
+    navigate(`${patientAddress}?${params.toString()}`);
   };
 
   return (
@@ -55,6 +56,7 @@ export const EmergencyRecords = () => {
             key={i}
             patient={patient}
             handleViewAppointment={handleViewAppointment}
+            emergency={true}
           />
         ))}
       </div>

@@ -22,6 +22,8 @@ import ViewAppointment from "./pages/doctor/ViewAppointment";
 import { EmergencyRecords } from "./pages/doctor/EmergencyRecords";
 import EmergencyRecordDetails from "./pages/doctor/EmergencyRecordDetails";
 import ProfilePage from "./pages/ProfilePage";
+import SharedRecords from "./pages/doctor/SharedRecords";
+import PatientSharedRecords from "./pages/doctor/PatientSharedRecords";
 
 const router = createBrowserRouter([
   {
@@ -91,6 +93,14 @@ const router = createBrowserRouter([
           {
             path: "create/:patientAddress",
             element: <CreateRecord />,
+          },
+          {
+            path: "shared-records",
+            element: <SharedRecords />,
+          },
+          {
+            path: "shared-records/:patientAddress",
+            element: <PatientSharedRecords />,
           },
         ],
       },

@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowRightCircle, Mail, Phone } from "lucide-react";
 import DoctorCard from "@/components/DoctorCard";
 import { LoadingState } from "@/components/LoadingState";
 

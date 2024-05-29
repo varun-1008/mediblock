@@ -7,7 +7,6 @@ import {
 import { RecordTimeline } from "@/components/RecordTimeline";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
-import { useResolvedPath } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 export function Records({

@@ -127,10 +127,7 @@ contract MediBlock {
      * @param linkIndex the link index of the records
      * @param _addr doctor or pathologist address
      */
-    function revokeAccess(
-        uint linkIndex,
-        address _addr
-    ) public isPatient(msg.sender) isDoctorOrPathologist(_addr) {
+    function revokeAccess(uint linkIndex, address _addr) public isPatient(msg.sender) isDoctorOrPathologist(_addr) {
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         uint accessListLen = patient.access[linkIndex].length;
         for (uint i = 0; i < accessListLen; i++) {
@@ -143,18 +140,25 @@ contract MediBlock {
     }
 
     /**
-     * @param _addr doctor/pathologist address
+     * @param _patient patient address
+     * @param _doctor doctor/pathologist address
      * @param linkIndex link Index
      * @return bool
      */
-    function hasAccess(address _addr, uint linkIndex) public view isPatient(msg.sender) isDoctorOrPathologist(_addr)returns(bool){
-        IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
+    function hasAccess(
+        address _patient,
+        address _doctor,
+        uint linkIndex
+    ) public view isDoctorOrPathologist(_doctor) returns (bool) {
+        IterableMappingPatient.Patient storage patient = patients.get(_patient);
         uint accessListLen = patient.access[linkIndex].length;
-        for(uint i = 0; i < accessListLen; i++){
-            if(patient.access[linkIndex][i].addr == _addr && patient.access[linkIndex][i].time > block.timestamp)   return true;
+        for (uint i = 0; i < accessListLen; i++) {
+            if (patient.access[linkIndex][i].addr == _doctor && patient.access[linkIndex][i].time > block.timestamp)
+                return true;
         }
         return false;
     }
+
     /**
      * @notice to get information about a record
      * @param _patient patient address
@@ -164,7 +168,11 @@ contract MediBlock {
      * @return date time of the record
      * @return data content of the record
      */
-    function getRecord(address _patient, uint linkIndex, uint recordIndex) public view returns (string memory,string memory, string memory) {
+    function getRecord(
+        address _patient,
+        uint linkIndex,
+        uint recordIndex
+    ) public view returns (string memory, string memory, string memory) {
         IterableMappingPatient.Patient storage patient = patients.get(_patient);
         string memory _title = patient.records[linkIndex][recordIndex].title;
         string memory _date = patient.records[linkIndex][recordIndex].date;
@@ -273,14 +281,17 @@ contract MediBlock {
      * @dev patient address is provided by msg.sender
      * @param _doctor doctor address
      */
-    function addAppointment(address _doctor, uint256[] memory linkIndices) public isPatient(msg.sender) isDoctor(_doctor) {
+    function addAppointment(
+        address _doctor,
+        uint256[] memory linkIndices
+    ) public isPatient(msg.sender) isDoctor(_doctor) {
         IterableMappingDoctor.Doctor storage doctor = doctors.get(_doctor);
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         patient.appointedDoctors.push(_doctor);
         doctor.appointments.push(msg.sender);
 
         uint len = linkIndices.length;
-        for(uint i = 0; i < len; i++) {
+        for (uint i = 0; i < len; i++) {
             giveAccess(linkIndices[i], _doctor, 17163390304230);
         }
 
@@ -288,22 +299,22 @@ contract MediBlock {
         doctor.numberOfAppointments = doctor.numberOfAppointments + 1;
     }
 
-    function getNumberOfAppointmentsPatient() public view isPatient(msg.sender) returns (uint){
+    function getNumberOfAppointmentsPatient() public view isPatient(msg.sender) returns (uint) {
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         return (patient.numberOfAppointments - patient.appointedDoctors.length);
     }
 
-    function getNumberOfActiveAppointmentsPatient() public view isPatient(msg.sender) returns (uint){
+    function getNumberOfActiveAppointmentsPatient() public view isPatient(msg.sender) returns (uint) {
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         return patient.appointedDoctors.length;
     }
 
-    function getNumberOfAppointmentsDoctor(address _doctor) public view returns (uint){
+    function getNumberOfAppointmentsDoctor(address _doctor) public view returns (uint) {
         IterableMappingDoctor.Doctor storage doctor = doctors.get(_doctor);
         return (doctor.numberOfAppointments - doctor.appointments.length);
     }
 
-    function getNumberOfActiveAppointmentsDoctor() public view isDoctor(msg.sender) returns (uint){
+    function getNumberOfActiveAppointmentsDoctor() public view isDoctor(msg.sender) returns (uint) {
         IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
         return doctor.appointments.length;
     }
@@ -314,7 +325,7 @@ contract MediBlock {
      * @param recordIndex record index
      * @return flag
      */
-    function isEmergencyRecord(uint linkIndex,uint recordIndex) public view isPatient(msg.sender) returns(bool){
+    function isEmergencyRecord(uint linkIndex, uint recordIndex) public view isPatient(msg.sender) returns (bool) {
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         return patient.records[linkIndex][recordIndex].isEmergency;
     }
@@ -334,7 +345,7 @@ contract MediBlock {
      * @param linkIndex index of link
      * @param recordIndex index of record
      */
-    function removeEmergencyRecord(uint linkIndex,uint recordIndex) public isPatient(msg.sender) {
+    function removeEmergencyRecord(uint linkIndex, uint recordIndex) public isPatient(msg.sender) {
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         patient.records[linkIndex][recordIndex].isEmergency = false;
     }
@@ -352,10 +363,10 @@ contract MediBlock {
         IterableMappingPatient.Patient storage patient = patients.get(_patient);
         uint len = 0;
         uint linkLength = patient.linkLength;
-        for(uint i = 0; i < linkLength; i++){
+        for (uint i = 0; i < linkLength; i++) {
             uint recordLen = patient.records[i].length;
-            for(uint j = 0; j < recordLen; j++){
-                if(patient.records[i][j].isEmergency)   len++;
+            for (uint j = 0; j < recordLen; j++) {
+                if (patient.records[i][j].isEmergency) len++;
             }
         }
         string[] memory titleList = new string[](len);
@@ -363,10 +374,10 @@ contract MediBlock {
         uint[] memory linkIndices = new uint[](len);
         uint[] memory recordIndices = new uint[](len);
         uint counter = 0;
-        for(uint i = 0; i < linkLength; i++){
+        for (uint i = 0; i < linkLength; i++) {
             uint recordLen = patient.records[i].length;
-            for(uint j = 0; j < recordLen; j++){
-                if(patient.records[i][j].isEmergency){
+            for (uint j = 0; j < recordLen; j++) {
+                if (patient.records[i][j].isEmergency) {
                     titleList[counter] = patient.records[i][j].title;
                     dateList[counter] = patient.records[i][j].date;
                     linkIndices[counter] = i;
@@ -383,13 +394,11 @@ contract MediBlock {
      * @param linkIndex link index
      * @return doctorArr array
      */
-    function getDoctorListWithLinkAccess(
-        uint linkIndex
-    ) public view isPatient(msg.sender) returns (address[] memory){
+    function getDoctorListWithLinkAccess(uint linkIndex) public view isPatient(msg.sender) returns (address[] memory) {
         IterableMappingPatient.Patient storage patient = patients.get(msg.sender);
         uint accessLen = patient.access[linkIndex].length;
         address[] memory doctorArr = new address[](accessLen);
-        for(uint i = 0; i < accessLen; i++){
+        for (uint i = 0; i < accessLen; i++) {
             doctorArr[i] = patient.access[linkIndex][i].addr;
         }
         return doctorArr;
@@ -501,7 +510,7 @@ contract MediBlock {
         accessTime += 1000000000;
         patient.access[linkIndex][accessIndex].time = accessTime;
         patient.records[linkIndex].push(IterableMappingPatient.Record(msg.sender, _title, _date, _data, false));
-        
+
         patient.numberOfRecords = patient.numberOfRecords + 1;
         doctor.numberOfRecords = doctor.numberOfRecords + 1;
         removeAppointment(_patient);
@@ -619,5 +628,4 @@ contract MediBlock {
             }
         }
     }
-    
 }

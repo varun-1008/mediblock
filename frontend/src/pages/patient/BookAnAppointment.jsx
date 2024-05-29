@@ -68,7 +68,7 @@ export default function BookAnAppointment() {
 
         let access = await contract
           .connect(signer)
-          .hasAccess(doctorAddress, linkIndices[i]);
+          .hasAccess(address, doctorAddress, linkIndices[i]);
         if (access) {
           setHasAccess(true);
           continue;

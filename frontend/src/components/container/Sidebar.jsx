@@ -10,6 +10,7 @@ import {
   LibraryBig,
   LogOut,
   Newspaper,
+  Radio,
   Settings,
   User,
   UserRound,
@@ -62,6 +63,11 @@ const navLinks = {
       to: "/doctor/viewAppointments",
       label: "View Appointments",
       icon: <Newspaper size={20} strokeWidth={2} />,
+    },
+    {
+      to: "/doctor/shared-records",
+      label: "Shared Records",
+      icon: <Radio size={20} strokeWidth={2} />,
     },
     {
       to: "/doctor/emergencyRecords",

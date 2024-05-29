@@ -1,7 +1,7 @@
-import { useResolvedPath, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useWallet from "@/context/UseWallet";
-import { format } from "date-fns";
+
 import Record from "@/ui/Record";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -25,9 +25,8 @@ const fetchEmergencyRecords = async (contract, patientAddress) => {
 
 export default function EmergencyRecordDetails() {
   const { contract } = useWallet();
-  const location = useLocation();
-  const { name: patientName } = location.state || {};
-  const patientAddress = useResolvedPath().pathname.split("/")[3];
+  const { patientAddress } = useParams();
+  const patientName = new URLSearchParams(window.location.search).get("name");
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
