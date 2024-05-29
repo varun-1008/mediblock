@@ -95,7 +95,7 @@ export const RecordsShared = () => {
               return (
                 <AccordionItem key={index} value={`item-${index}`}>
                   <AccordionTrigger className="font-normal">
-                    {patient.name}
+                    <span className="">{patient.name}</span>
                   </AccordionTrigger>
                   <AccordionContent>
                     <DashboardSharedRecords patient={patient} />
