@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
-import { Trash, View } from "lucide-react";
+import { Phone, Trash, View } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LoadingState } from "@/components/LoadingState";
 
@@ -53,9 +53,9 @@ function ViewAppointments() {
           <p className="text-zinc-400">No upcoming appointments found</p>
         </div>
       ) : (
-        <>
+        <div className="grid grid-cols-3 gap-10 w-full">
           {patients.map((patient, i) => (
-            <div key={i} className="bg-white rounded-lg border h-max w-max">
+            <div key={i} className="bg-white rounded-lg border">
               <div className="p-4 space-y-4">
                 <div className="flex justify-between h-full">
                   <div className="flex items-center gap-2">
@@ -70,18 +70,14 @@ function ViewAppointments() {
                         <p>{patient.gender === "M" ? "Mr." : "Mrs."}</p>
                         <p>{patient.name}</p>
                       </span>
-                      <span className="text-zinc-400">{patient.email}</span>
+                      <span className="text-zinc-400 text-sm">
+                        {patient.email}
+                      </span>
                     </div>
                   </div>
-                  <div className="rounded hover:bg-zinc-100 transition flex items-center justify-center p-2 aspect-square cursor-pointer">
-                    {patient.gender}
+                  <div className="rounded hover:bg-zinc-100 transition flex items-center justify-center h-max p-2 aspect-square cursor-pointer">
+                    <Phone size={20} />
                   </div>
-                </div>
-                <div className="h-px bg-zinc-200" />
-                <div className="h-20 w-full flex items-center justify-center">
-                  <p className="">
-                    Fill up with attributes such as working days, location
-                  </p>
                 </div>
               </div>
               <div className="h-px bg-zinc-200" />
@@ -107,7 +103,7 @@ function ViewAppointments() {
               </div>
             </div>
           ))}
-        </>
+        </div>
       )}
     </div>
   );

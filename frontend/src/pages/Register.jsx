@@ -17,7 +17,7 @@ function Register() {
 
   return (
     <div className="h-full w-full flex justify-center">
-      <div className=" px-8 py-6 rounded-md space-y-5 mt-10 bg-white h-max">
+      <div className="px-8 py-6 rounded-md space-y-5 mt-10 bg-white h-max">
         <div>
           <h1 className="text-lg font-semibold">Create Account</h1>
           <p className="text-zinc-400">Fill the form to create an account</p>

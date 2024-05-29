@@ -96,8 +96,8 @@ export const Sidebar = () => {
   const pathname = useResolvedPath().pathname;
 
   return (
-    <aside className="flex flex-col justify-between items-center w-1/5 py-10 overflow-y-auto">
-      <div className="flex flex-col gap-14 items-center w-9/12 h-full">
+    <aside className="flex flex-col justify-between items-center w-1/5 py-6 overflow-y-auto">
+      <div className="flex flex-col gap-16 items-center w-9/12 h-full">
         <Link
           className="text-2xl font-semibold leading-none flex items-center gap-2.5"
           to="dashboard"

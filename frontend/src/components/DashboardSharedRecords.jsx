@@ -53,7 +53,7 @@ export const DashboardSharedRecords = ({ patient }) => {
   return (
     <div className="w-full flex gap-5 items-center">
       {records.map((record, i) => (
-        <RecordBlock address={address} record={record} key={i} />
+        <RecordBlock key={i} address={address} record={record} />
       ))}
     </div>
   );

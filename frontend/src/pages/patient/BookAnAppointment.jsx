@@ -132,7 +132,7 @@ export default function BookAnAppointment() {
                 <p className="text-zinc-400 text-sm">
                   The doctor has access to some of your records. Manage them{" "}
                   <span
-                    className="underline"
+                    className="underline cursor-pointer"
                     onClick={() => {
                       navigate("/settings");
                     }}
