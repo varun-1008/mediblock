@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import Record from "@/ui/Record";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { GoBackButton } from "@/components/GoBackButton";
 
 const fetchEmergencyRecords = async (contract, patientAddress) => {
   try {
@@ -37,7 +38,15 @@ export default function EmergencyRecordDetails() {
 
   return (
     <div className="space-y-10">
-      <h1>Emergency Record Details for {patientName || patientAddress}</h1>
+      <div className="space-y-5">
+        <GoBackButton />
+        <div>
+          <h1 className="font-medium">Emergency Record Details</h1>
+          <p className="text-zinc-400 text-sm">
+            Emergency record details for {patientName}
+          </p>
+        </div>
+      </div>
       {records.length > 0 ? (
         <ul className="flex flex-wrap gap-4 w-max">
           {records.map((record, index) => (
@@ -70,7 +79,11 @@ export default function EmergencyRecordDetails() {
           ))}
         </ul>
       ) : (
-        <p>No emergency records found for this patient.</p>
+        <div className="h-44 flex items-center justify-center">
+          <p className="text-zinc-400">
+            No emergency records found for this patient.
+          </p>
+        </div>
       )}
     </div>
   );

@@ -18,14 +18,16 @@ export const ActiveAppointments = ({ data, role }) => {
             </h1>
             <p className="text-base text-zinc-400">
               Active {role === 1 ? "Appointment" : "Consultation"}
-              {data.numberOfActiveAppointments > 1 ? "s" : ""}
+              {data.numberOfActiveAppointments !== 1 ? "s" : ""}
             </p>
           </div>
         </div>
         <div>
           <p className="text-sm">
             You have{" "}
-            <span className="text-[#FE686B]">{data.numberOfActiveAppointments} </span>{" "}
+            <span className="text-[#FE686B]">
+              {data.numberOfActiveAppointments}{" "}
+            </span>{" "}
             active {role === 1 ? "appointment" : "consultation"}
             {data.numberOfActiveAppointments !== 1 && "s"}
           </p>

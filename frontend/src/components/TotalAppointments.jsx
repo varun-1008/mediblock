@@ -18,7 +18,7 @@ export const TotalAppointments = ({ data, role }) => {
             </h1>
             <p className="text-base text-zinc-400">
               {role === 1 ? "Appointment" : "Consultation"}
-              {data.numberOfAppointments > 1 ? "s" : ""}
+              {data.numberOfAppointments !== 1 ? "s" : ""}
             </p>
           </div>
         </div>
