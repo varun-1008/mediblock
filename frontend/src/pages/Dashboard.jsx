@@ -1,4 +1,5 @@
 import { ActiveAppointments } from "@/components/ActiveAppointments";
+import { RecordsShared } from "@/components/RecordsShared";
 import { TotalAppointments } from "@/components/TotalAppointments";
 import { TotalRecords } from "@/components/TotalRecords";
 import useWallet from "@/context/UseWallet";
@@ -55,13 +56,13 @@ function Dashboard() {
   return (
     <div className="space-y-10">
       <div className="w-full h-full grid grid-cols-1 md:grid-cols-3 gap-10">
-        {/* <UserDetails data={data} role={role} /> */}
         <TotalRecords data={data} role={role} />
         <TotalAppointments data={data} role={role} />
         <ActiveAppointments data={data} role={role} />
       </div>
       <div className="w-full">
         {role === 1 && <RevokeAccess thinTitle={true} />}
+        {role === 2 && <RecordsShared />}
       </div>
     </div>
   );

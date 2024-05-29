@@ -4,7 +4,7 @@ export const TotalRecords = ({ data, role }) => {
   if (!data) return null;
   return (
     <Link
-      to="/patient/allRecords"
+      to={role === 1 ? "/patient/allRecords" : ""}
       className="rounded-xl bg-white pl-10 py-10 flex items-center justify-start cursor-pointer"
     >
       <div className="flex flex-col gap-5">

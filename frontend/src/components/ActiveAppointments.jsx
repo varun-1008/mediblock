@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 
 export const ActiveAppointments = ({ data, role }) => {
   if (!data) return null;
+
   return (
     <Link
-      to="/patient/allAppointments"
+      to={role === 1 ? "/patient/allAppointments" : "/doctor/viewAppointments"}
       className="rounded-xl bg-white pl-10 py-10 flex items-center justify-start cursor-pointer"
     >
       <div className="flex flex-col gap-5">
