@@ -162,6 +162,9 @@ export const Sidebar = () => {
                 variant="ghost"
                 className="flex justify-start gap-3 text-sm px-5 py-4 w-full text-zinc-500 h-max hover:bg-zinc-100 hover:text-zinc-500 font-normal"
                 size="lg"
+                onClick={() => {
+                  window.location.reload();
+                }}
               >
                 <LogOut size={20} /> Logout
               </Button>
