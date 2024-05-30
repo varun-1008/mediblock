@@ -102,28 +102,30 @@ function RevokeAccess({ thinTitle }) {
         <DialogContent>
           <div className="space-y-5">
             <h1 className="font-medium">Authorised Doctors</h1>
-            {doctors ? (
-              doctors.map((doctor, index) => (
-                <div
-                  key={doctor.name}
-                  className="w-full p-2 rounded-lg border flex items-center justify-between"
-                >
-                  <p className="font-medium">Dr. {doctor.name}</p>
-                  <Button
-                    variant="destructive"
-                    className="font-normal"
-                    onClick={() => handleRemoveAccess(doctor.address)}
+            <div className="space-y-2">
+              {doctors ? (
+                doctors.map((doctor, index) => (
+                  <div
+                    key={doctor.name}
+                    className="w-full px-2 pl-5 py-2 rounded-lg border flex items-center justify-between"
                   >
-                    <X size={15} className="mr-2" />
-                    Remove Access
-                  </Button>
+                    <p className="text-sm">Dr. {doctor.name}</p>
+                    <Button
+                      variant="destructive"
+                      className="font-normal"
+                      onClick={() => handleRemoveAccess(doctor.address)}
+                    >
+                      <X size={15} className="mr-2" />
+                      Remove Access
+                    </Button>
+                  </div>
+                ))
+              ) : (
+                <div className="w-full flex justify-center h-full items-center">
+                  <Loader2 className="animate-spin h-4 w-4" />
                 </div>
-              ))
-            ) : (
-              <div className="w-full flex justify-center h-full items-center">
-                <Loader2 className="animate-spin h-4 w-4" />
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </DialogContent>
       </Dialog>
