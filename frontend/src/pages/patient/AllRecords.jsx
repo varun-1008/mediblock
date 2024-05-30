@@ -45,6 +45,11 @@ function AllRecords() {
           List of all the secured records prescribed by the doctors
         </p>
       </div>
+      {records.length === 0 && (
+        <div className="h-40 flex items-center justify-center">
+          <span className="text-zinc-400">No records found</span>
+        </div>
+      )}
       <Records address={address} records={records} />
     </div>
   );

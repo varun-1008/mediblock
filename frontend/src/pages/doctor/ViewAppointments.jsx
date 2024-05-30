@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
-import { Phone, Trash, View } from "lucide-react";
+import { Check, Phone, Trash, View, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LoadingState } from "@/components/LoadingState";
 
@@ -11,9 +11,10 @@ function ViewAppointments() {
   const { signer, contract } = useWallet();
   const navigate = useNavigate();
 
-  function handleViewAppointment(patientAddress) {
-    console.log(patientAddress);
-    navigate(`/doctor/viewAppointment/${patientAddress}`);
+  function handleViewAppointment(patientAddress, patientName) {
+    const params = new URLSearchParams();
+    params.append("name", patientName);
+    navigate(`${patientAddress}?${params.toString()}`);
   }
 
   async function handleRemove(patientAddress) {
@@ -55,7 +56,7 @@ function ViewAppointments() {
       ) : (
         <div className="grid grid-cols-3 gap-10 w-full">
           {patients.map((patient, i) => (
-            <div key={i} className="bg-white rounded-lg border">
+            <div key={i} className="bg-white rounded-lg border text-sm">
               <div className="p-4 space-y-4">
                 <div className="flex justify-between h-full">
                   <div className="flex items-center gap-2">
@@ -84,20 +85,22 @@ function ViewAppointments() {
               <div className="w-full flex items-center gap-3 px-4 py-3">
                 <Button
                   variant="outline"
-                  className="flex items-center gap-2 p-0 flex-1"
+                  className="flex items-center gap-2 p-0 flex-1 font-normal"
                   size="lg"
-                  onClick={() => handleViewAppointment(patient.address)}
+                  onClick={() =>
+                    handleViewAppointment(patient.address, patient.name)
+                  }
                 >
-                  <View size={20} />
+                  <View size={18} />
                   <span>View</span>
                 </Button>
                 <Button
-                  className="flex items-center flex-1 p-0 gap-2 text-white bg-blue-500 hover:bg-blue-500/90"
+                  className="font-normal flex items-center flex-1 p-0 gap-2 text-white bg-blue-500 hover:bg-blue-500/90"
                   size="lg"
                   type="submit"
                   onClick={() => handleRemove(patient.address)}
                 >
-                  <Trash size={20} />
+                  <X size={18} />
                   <span>Remove</span>
                 </Button>
               </div>

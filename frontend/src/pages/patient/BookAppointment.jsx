@@ -78,7 +78,7 @@ function BookAppointment() {
           handleInputOnChange={handleInputOnChange}
         />
         {finalDoctors.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-sm">
             {finalDoctors.map((doctor) => {
               return (
                 <DoctorCard

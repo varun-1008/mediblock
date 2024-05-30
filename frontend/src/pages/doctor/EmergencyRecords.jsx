@@ -73,7 +73,7 @@ export const EmergencyRecords = () => {
           handleInputOnChange={handleInputOnChange}
         />
         {finalPatients.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {finalPatients.map((patient, i) => (
               <PatientCard
                 key={i}

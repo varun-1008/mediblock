@@ -54,7 +54,11 @@ function AllAppointments() {
                   <div className="flex items-center gap-2">
                     <div className="rounded-full h-10 overflow-hidden aspect-square">
                       <img
-                        src="/images/doctor.jpeg"
+                        src={
+                          doctor.gender === "M"
+                            ? "/images/doctor-male.jpg"
+                            : "/images/doctor-female.jpg"
+                        }
                         className="object-cover h-12 w-12"
                       />
                     </div>

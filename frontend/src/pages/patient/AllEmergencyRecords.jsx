@@ -57,7 +57,7 @@ function AllEmergencyRecords() {
           <p className="text-zinc-400">No emergency records found</p>
         </div>
       ) : (
-        <div className="w-full grid grid-cols-5 gap-10">
+        <div className="w-full grid grid-cols-5 gap-5">
           {emergencyRecords.map((linkRecords) => {
             return linkRecords.map((record, index) => {
               return (

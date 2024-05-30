@@ -4,7 +4,7 @@ import useWallet from "../../context/UseWallet";
 import { Records } from "../../ui/Records";
 import { Button } from "@/components/ui/button";
 import CreateRecord from "./CreateRecord";
-import { Plus } from "lucide-react";
+import { Plus, PlusCircle } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { LoadingState } from "@/components/LoadingState";
 
@@ -15,6 +15,7 @@ export default function ViewAppointment() {
 
   const { signer, contract, address } = useWallet();
   const { patientAddress } = useParams();
+  const patientName = new URLSearchParams(window.location.search).get("name");
 
   useEffect(() => {
     (async function () {
@@ -42,7 +43,6 @@ export default function ViewAppointment() {
         newData[linkIndices[i]].push(recordObj);
       }
 
-      console.log(newData);
       setRecords(newData);
     })();
   }, [patientAddress, signer, contract]);
@@ -55,21 +55,33 @@ export default function ViewAppointment() {
   if (records === null) return <LoadingState />;
 
   return (
-    <>
-      <h1>View Appointment</h1>
-      <Button onClick={() => setType("new")}>Create a new record</Button>
-
-      <Records
-        address={address}
-        records={records}
-        Element={Element}
-        elementFunction={handleSelect}
-      />
+    <div className="space-y-10">
+      <div>
+        <h1 className="font-medium">View Appointment</h1>
+        <p className="text-zinc-400 text-sm">
+          View appointment for {patientName}
+        </p>
+      </div>
+      <Button
+        onClick={() => setType("new")}
+        className="bg-blue-500 flex items-center gap-2 font-normal"
+      >
+        <PlusCircle size={18} strokeWidth={1.5} />
+        New Record Link
+      </Button>
+      <div className="w-full">
+        <Records
+          address={address}
+          records={records}
+          Element={Element}
+          elementFunction={handleSelect}
+        />
+      </div>
 
       {type && (
         <CreateRecord type={type} setType={setType} linkIndex={linkIndex} />
       )}
-    </>
+    </div>
   );
 }
 
@@ -77,10 +89,15 @@ function Element({ isSelected, linkIndex, elementFunction }) {
   return (
     <>
       <div className="flex items-center gap-2 select-none">
-        <Button onClick={() => elementFunction(linkIndex)}>
-          {isSelected ? <Plus /> : <Plus />}
+        <Button
+          onClick={() => elementFunction(linkIndex)}
+          className="font-normal flex items-center gap-2"
+          variant="outline"
+        >
+          {/* {isSelected ? <Plus /> : <Plus />} */}
+          <PlusCircle size={18} strokeWidth={1.5} />
+          New Record to this Link
         </Button>
-        <Label className="flex items-center gap-2">Create record</Label>
       </div>
     </>
   );
