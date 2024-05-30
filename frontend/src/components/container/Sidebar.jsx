@@ -79,11 +79,11 @@ const navLinks = {
 };
 
 const profileLinks = [
-  // {
-  //   to: "/settings",
-  //   label: "Settings",
-  //   icon: <Settings size={20} strokeWidth={2} />,
-  // },
+  {
+    to: "/settings",
+    label: "Settings",
+    icon: <Settings size={20} strokeWidth={2} />,
+  },
   {
     to: "/profile",
     label: "Profile",
@@ -137,6 +137,7 @@ export const Sidebar = () => {
         <div className="w-9/12">
           <ul className="flex flex-col gap-1 w-full">
             {profileLinks.map((nav, i) => {
+              if (nav.label === "Settings" && role === 2) return null;
               const isActive = pathname === nav.to || pathname.includes(nav.to);
               return (
                 <li
