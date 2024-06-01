@@ -531,9 +531,8 @@ contract MediBlock {
         string memory _title,
         string memory _date,
         string memory _data
-    ) public isPatient(_patient) isDoctor(msg.sender) {
+    ) public isPatient(_patient) {
         IterableMappingPatient.Patient storage patient = patients.get(_patient);
-        IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
         uint recordIndex = patient.records[linkIndex].length;
         // console.log(recordIndex);
         patient.records[linkIndex].push();
@@ -544,7 +543,10 @@ contract MediBlock {
         // console.log(patient.records[linkIndex].length);
 
         patient.numberOfRecords = patient.numberOfRecords + 1;
-        doctor.numberOfRecords = doctor.numberOfRecords + 1;
+        if(msg.sender != _patient){
+            IterableMappingDoctor.Doctor storage doctor = doctors.get(msg.sender);
+            doctor.numberOfRecords = doctor.numberOfRecords + 1;
+        }
         removeAppointment(_patient);
     }
 
@@ -556,6 +558,13 @@ contract MediBlock {
     function getNumberOfRecordsDoctor(address _doctor) public view returns (uint) {
         IterableMappingDoctor.Doctor storage doctor = doctors.get(_doctor);
         return doctor.numberOfRecords;
+    }
+
+    function checkSelfRecord(address _patient, uint linkIndex, uint recordIndex) public view isPatient(_patient) returns (bool) {
+        IterableMappingPatient.Patient storage patient = patients.get(_patient);
+        if(patient.records[linkIndex][recordIndex].creator == _patient) 
+            return true;
+        return false;
     }
 
     /**
