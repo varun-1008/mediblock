@@ -7,6 +7,17 @@ export const PatientCard = ({
   handleViewAppointment,
   handleViewRecords,
 }) => {
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(address).then(
+      () => {
+        toast.success("Phone number copied");
+      },
+      (err) => {
+        toast.error("Could not copy text: ", err);
+      }
+    );
+  };
+
   return (
     <div className="bg-white rounded-lg border h-max max-w-sm w-full">
       <div className="p-4 space-y-4">
@@ -30,7 +41,10 @@ export const PatientCard = ({
               <span className="text-zinc-400 text-sm">{patient.email}</span>
             </div>
           </div>
-          <div className="rounded hover:bg-zinc-100 transition flex items-center justify-center h-max p-2 aspect-square cursor-pointer">
+          <div
+            className="rounded hover:bg-zinc-100 transition flex items-center justify-center h-max p-2 aspect-square cursor-pointer"
+            onClick={copyToClipboard}
+          >
             <Phone size={20} />
           </div>
         </div>

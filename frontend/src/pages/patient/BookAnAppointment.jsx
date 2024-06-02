@@ -37,6 +37,7 @@ export default function BookAnAppointment() {
         .connect(signer)
         .addAppointment(doctorAddress, selected);
       await tx.wait();
+      toast.success("Appointment scheduled successfully!");
       navigate("/patient/allAppointments");
     } catch (error) {
       toast.error("Something went wrong");

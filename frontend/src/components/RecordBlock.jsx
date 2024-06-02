@@ -9,17 +9,20 @@ import { useModal } from "@/hooks/ModalStore";
 
 export const RecordBlock = ({ address, record }) => {
   const { signer, contract } = useWallet();
-  const [isSelf, setIsSelf] = useState(false);
-
+  const [isPatientRecord, setIsPatientRecord] = useState(false);
   const getRecordInfo = async () => {
-    const isSelfRecord = await contract
-      .connect(signer)
-      .checkSelfRecord(
-        address,
-        parseInt(record.linkIndex),
-        parseInt(record.recordIndex)
-      );
-    setIsSelf(isSelfRecord);
+    try {
+      const isPatientRecord = await contract
+        .connect(signer)
+        .checkSelfRecord(
+          address,
+          parseInt(record.linkIndex),
+          parseInt(record.recordIndex)
+        );
+      setIsPatientRecord(isPatientRecord);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export const RecordBlock = ({ address, record }) => {
     <div className="border select-none bg-white rounded-lg overflow-hidden min-w-[150px]">
       <div className="px-5 py-4 border-b w-full flex items-center justify-center relative">
         <p className="font-medium leading-none w-max">{record.title}</p>
-        {isSelf && (
+        {isPatientRecord && (
           <HoverCard>
             <HoverCardTrigger>
               <Info

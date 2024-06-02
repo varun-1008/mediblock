@@ -73,7 +73,7 @@ export default function ViewAppointment() {
       </Button>
       <div className="w-full">
         <Records
-          address={address}
+          address={patientAddress}
           records={records}
           elementFunction={elementFunction}
           type={"create-record"}

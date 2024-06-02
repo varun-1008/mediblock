@@ -5,7 +5,7 @@ import { RecordBlock } from "./RecordBlock";
 
 export const DashboardSharedRecords = ({ patient }) => {
   const [records, setRecords] = useState(null);
-  const { contract, signer, address } = useWallet();
+  const { contract, signer } = useWallet();
 
   const patientAddress = patient.address;
 
@@ -51,9 +51,9 @@ export const DashboardSharedRecords = ({ patient }) => {
   }
 
   return (
-    <div className="w-full flex gap-5 items-center">
+    <div className="w-full flex gap-5 items-center flex-wrap">
       {records.map((record, i) => (
-        <RecordBlock key={i} address={address} record={record} />
+        <RecordBlock key={i} address={patientAddress} record={record} />
       ))}
     </div>
   );

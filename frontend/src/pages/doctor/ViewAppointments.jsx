@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import useWallet from "../../context/UseWallet";
 import { ipfsDownload } from "../../utils/ipfs";
 import { useNavigate } from "react-router-dom";
-import { Check, Phone, Trash, View, X } from "lucide-react";
+import { Check, Loader2, Phone, Trash, View, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LoadingState } from "@/components/LoadingState";
+import toast from "react-hot-toast";
 
 function ViewAppointments() {
   const [patients, setPatients] = useState(null);
@@ -17,29 +18,44 @@ function ViewAppointments() {
     navigate(`${patientAddress}?${params.toString()}`);
   }
 
+  const [isLoading, setIsLoading] = useState(false);
+
   async function handleRemove(patientAddress) {
-    const tx = await contract.connect(signer).removeAppointment(patientAddress);
-    await tx;
-    setPatients(null);
+    try {
+      setIsLoading(true);
+      const tx = await contract
+        .connect(signer)
+        .removeAppointment(patientAddress);
+      await tx;
+      toast.success("Appointment status updated!");
+      await getPatients();
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
+  const getPatients = async () => {
+    const newData = [];
+
+    const patientAddresses = await contract
+      .connect(signer)
+      .getAppointedPatients();
+
+    for (const patientAddress of patientAddresses) {
+      const cid = await contract.getPatientInfo(patientAddress);
+      const info = await ipfsDownload(cid);
+      info.address = patientAddress;
+      newData.push(info);
+    }
+    setPatients(newData);
+  };
+
   useEffect(() => {
-    (async function () {
-      const newData = [];
-
-      const patientAddresses = await contract
-        .connect(signer)
-        .getAppointedPatients();
-
-      for (const patientAddress of patientAddresses) {
-        const cid = await contract.getPatientInfo(patientAddress);
-        const info = await ipfsDownload(cid);
-        info.address = patientAddress;
-        newData.push(info);
-      }
-      setPatients(newData);
-    })();
-  }, [patients, signer, contract]);
+    getPatients();
+  }, []);
 
   if (patients === null) return <LoadingState />;
 
@@ -62,7 +78,11 @@ function ViewAppointments() {
                   <div className="flex items-center gap-2">
                     <div className="rounded-full h-10 overflow-hidden aspect-square">
                       <img
-                        src="/images/doctor.jpeg"
+                        src={
+                          patient.gender === "M"
+                            ? "/images/patient-male.jpg"
+                            : "/images/patient-female.jpg"
+                        }
                         className="object-cover h-12 w-12"
                       />
                     </div>
@@ -99,8 +119,13 @@ function ViewAppointments() {
                   size="lg"
                   type="submit"
                   onClick={() => handleRemove(patient.address)}
+                  disabled={isLoading}
                 >
-                  <X size={18} />
+                  {isLoading ? (
+                    <Loader2 size={15} className="animate-spin" />
+                  ) : (
+                    <X size={18} />
+                  )}
                   <span>Remove</span>
                 </Button>
               </div>

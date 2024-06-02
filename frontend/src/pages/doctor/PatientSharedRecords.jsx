@@ -11,7 +11,7 @@ function PatientSharedRecords() {
   const patientName = new URLSearchParams(window.location.search).get("name");
 
   const [records, setRecords] = useState(null);
-  const { contract, signer, address } = useWallet();
+  const { contract, signer } = useWallet();
 
   const getPatientRecords = async () => {
     try {
@@ -60,12 +60,7 @@ function PatientSharedRecords() {
           </p>
         </div>
       </div>
-      {/* <div className="w-full grid grid-cols-5 gap-10">
-        {records.map((record, index) => (
-          <RecordBlock key={index} address={address} record={record} />
-        ))}
-      </div> */}
-      <Records records={records} address={address} />
+      <Records records={records} address={patientAddress} />
     </div>
   );
 }
