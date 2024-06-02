@@ -4,6 +4,8 @@ import useWallet from "../context/UseWallet";
 import { Button } from "@/components/ui/button";
 import { useParams } from "react-router-dom/dist";
 import { LoadingState } from "@/components/LoadingState";
+import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 
 function Record({ recordData, handleEmergencyChange }) {
   const [record, setRecord] = useState(null);
@@ -14,22 +16,33 @@ function Record({ recordData, handleEmergencyChange }) {
 
   const { address, linkIndex, recordIndex } = recordData;
 
+  const [isLoading, setIsLoading] = useState();
+
   async function handleEmergency() {
-    let tx;
-    if (record.isEmergency)
-      tx = await contract
-        .connect(signer)
-        .removeEmergencyRecord(linkIndex, recordIndex);
-    else
-      tx = await contract
-        .connect(signer)
-        .addEmergencyRecord(linkIndex, recordIndex);
+    try {
+      setIsLoading(true);
+      let tx;
+      if (record.isEmergency)
+        tx = await contract
+          .connect(signer)
+          .removeEmergencyRecord(linkIndex, recordIndex);
+      else
+        tx = await contract
+          .connect(signer)
+          .addEmergencyRecord(linkIndex, recordIndex);
 
-    await tx.wait();
+      await tx.wait();
 
-    if (handleEmergencyChange) await handleEmergencyChange();
+      toast.success("Updated successfully!");
 
-    await getData();
+      if (handleEmergencyChange) await handleEmergencyChange();
+
+      await getData();
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const getData = useCallback(async () => {
@@ -83,7 +96,13 @@ function Record({ recordData, handleEmergencyChange }) {
           <img src={`data:image/png;base64,${record.image}`}></img>
         )}
         {role === 1 && (
-          <Button onClick={handleEmergency} className="w-full bg-destructive">
+          <Button
+            onClick={handleEmergency}
+            className="w-full bg-destructive flex gap-2"
+            disabled={isLoading}
+          >
+            {isLoading && <Loader2 size={20} className="animate-spin" />}
+
             {record.isEmergency
               ? "Remove from Emergency Record"
               : "Mark as an Emergency Record"}

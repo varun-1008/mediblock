@@ -7,11 +7,10 @@ import CreateRecord from "./CreateRecord";
 import { Plus, PlusCircle } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { LoadingState } from "@/components/LoadingState";
+import { useModal } from "@/hooks/ModalStore";
 
 export default function ViewAppointment() {
   const [records, setRecords] = useState(null);
-  const [type, setType] = useState(null);
-  const [linkIndex, setLinkIndex] = useState(null);
 
   const { signer, contract, address } = useWallet();
   const { patientAddress } = useParams();
@@ -47,9 +46,10 @@ export default function ViewAppointment() {
     })();
   }, [patientAddress, signer, contract]);
 
-  function handleSelect(linkIndex) {
-    setType("existing");
-    setLinkIndex(linkIndex);
+  const { onOpen } = useModal();
+
+  function elementFunction(linkIndex) {
+    onOpen("create-record", { createType: "existing", linkIndex: linkIndex });
   }
 
   if (records === null) return <LoadingState />;
@@ -63,7 +63,9 @@ export default function ViewAppointment() {
         </p>
       </div>
       <Button
-        onClick={() => setType("new")}
+        onClick={() => {
+          onOpen("create-record", { createType: "new", linkIndex: null });
+        }}
         className="bg-blue-500 flex items-center gap-2 font-normal"
       >
         <PlusCircle size={18} strokeWidth={1.5} />
@@ -73,32 +75,10 @@ export default function ViewAppointment() {
         <Records
           address={address}
           records={records}
-          Element={Element}
-          elementFunction={handleSelect}
+          elementFunction={elementFunction}
+          type={"create-record"}
         />
       </div>
-
-      {type && (
-        <CreateRecord type={type} setType={setType} linkIndex={linkIndex} />
-      )}
     </div>
-  );
-}
-
-function Element({ isSelected, linkIndex, elementFunction }) {
-  return (
-    <>
-      <div className="flex items-center gap-2 select-none">
-        <Button
-          onClick={() => elementFunction(linkIndex)}
-          className="font-normal flex items-center gap-2"
-          variant="outline"
-        >
-          {/* {isSelected ? <Plus /> : <Plus />} */}
-          <PlusCircle size={18} strokeWidth={1.5} />
-          New Record to this Link
-        </Button>
-      </div>
-    </>
   );
 }

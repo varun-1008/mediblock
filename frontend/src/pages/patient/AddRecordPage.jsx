@@ -1,11 +1,10 @@
-import useWallet from "@/context/UseWallet";
-import { useEffect, useState } from "react";
-import { Records } from "./Records";
 import { LoadingState } from "@/components/LoadingState";
-import { cn } from "@/lib/utils";
+import useWallet from "@/context/UseWallet";
 import { useModal } from "@/hooks/ModalStore";
+import { Records } from "@/ui/Records";
+import { useEffect, useState } from "react";
 
-function RevokeAccess({ thinTitle }) {
+function AddRecordPage() {
   const [records, setRecords] = useState(null);
   const { signer, contract, address } = useWallet();
 
@@ -39,36 +38,34 @@ function RevokeAccess({ thinTitle }) {
 
   const { onOpen } = useModal();
 
-  const onClick = (linkIndex) => {
-    onOpen("view-doctors", { linkIndex });
-  };
+  function elementFunction(linkIndex) {
+    linkIndex = parseInt(linkIndex);
+    console.log(linkIndex);
+    onOpen("create-record", { createType: "existing", linkIndex: linkIndex });
+  }
 
   if (!records) return <LoadingState />;
-
   return (
-    <div
-      className={cn(
-        "rounded-xl px-10 py-8 bg-white space-y-5",
-        records.length > 0 && "pb-14"
-      )}
-    >
-      <h1 className="font-medium">Manage Access</h1>
+    <div className="space-y-10">
+      <div>
+        <h1 className="font-medium">Add a Record</h1>
+        <p className="text-sm text-zinc-400">
+          Add a record in an existing link as a patient
+        </p>
+      </div>
       {records.length === 0 && (
-        <div className="h-32 flex items-center justify-center w-full">
-          <p className="text-zinc-400 text-sm">
-            You are not sharing any records currently
-          </p>
+        <div className="h-40 flex items-center justify-center">
+          <span className="text-zinc-400">No records found</span>
         </div>
       )}
       <Records
         address={address}
         records={records}
-        elementFunction={onClick}
-        thinTitle={thinTitle}
-        type="view-doctors"
+        type="create-record"
+        elementFunction={elementFunction}
       />
     </div>
   );
 }
 
-export default RevokeAccess;
+export default AddRecordPage;

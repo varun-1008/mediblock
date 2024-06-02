@@ -8,14 +8,15 @@ import { RecordTimeline } from "@/components/RecordTimeline";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { RecordFeatureButton } from "@/components/RecordFeatureButton";
 
 export function Records({
   address,
   records,
   selected,
-  Element,
   elementFunction,
   thinTitle,
+  type,
 }) {
   return (
     <div className="space-y-5">
@@ -43,11 +44,12 @@ export function Records({
                 <div className="flex items-center gap-5">
                   <RecordTimeline linkRecords={linkRecords} address={address} />
                 </div>
-                {Element && (
-                  <Element
+                {elementFunction && (
+                  <RecordFeatureButton
                     isSelected={selected?.includes(linkRecords[0].linkIndex)}
                     linkIndex={linkRecords[0].linkIndex}
                     elementFunction={elementFunction}
+                    type={type}
                   />
                 )}
               </div>

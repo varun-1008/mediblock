@@ -23,7 +23,7 @@ export const PatientCard = ({
               />
             </div>
             <div className="h-full flex flex-col">
-              <span className="font-medium flex items-end gap-1">
+              <span className="font-medium flex items-end gap-1 text-sm">
                 <p>{patient.gender === "M" ? "Mr." : "Mrs."}</p>
                 <p>{patient.name}</p>
               </span>

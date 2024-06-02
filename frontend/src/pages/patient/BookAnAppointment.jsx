@@ -148,8 +148,8 @@ export default function BookAnAppointment() {
             address={address}
             records={records}
             selected={selected}
-            Element={Element}
             elementFunction={handleSelect}
+            type="select-record"
           />
           <div className="w-full flex justify-end">
             <Button
@@ -167,19 +167,19 @@ export default function BookAnAppointment() {
   );
 }
 
-function Element({ isSelected, linkIndex, elementFunction }) {
-  return (
-    <>
-      <div className="flex items-center gap-2 select-none">
-        <Label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={isSelected}
-            onChange={() => elementFunction(linkIndex)}
-          />
-          {isSelected ? "Unselect" : "Select"}
-        </Label>
-      </div>
-    </>
-  );
-}
+// function Element({ isSelected, linkIndex, elementFunction }) {
+//   return (
+//     <>
+//       <div className="flex items-center gap-2 select-none">
+//         <Label className="flex items-center gap-2 cursor-pointer">
+//           <input
+//             type="checkbox"
+//             checked={isSelected}
+//             onChange={() => elementFunction(linkIndex)}
+//           />
+//           {isSelected ? "Unselect" : "Select"}
+//         </Label>
+//       </div>
+//     </>
+//   );
+// }

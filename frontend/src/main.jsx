@@ -15,7 +15,6 @@ import AllEmergencyRecords from "./pages/patient/AllEmergencyRecords.jsx";
 import ViewAppointments from "./pages/doctor/ViewAppointments.jsx";
 import CreateRecord from "./pages/doctor/CreateRecord.jsx";
 import WalletProvider from "./context/WalletContext";
-import { Toaster } from "react-hot-toast";
 import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import ViewAppointment from "./pages/doctor/ViewAppointment";
@@ -24,6 +23,7 @@ import EmergencyRecordDetails from "./pages/doctor/EmergencyRecordDetails";
 import ProfilePage from "./pages/ProfilePage";
 import SharedRecords from "./pages/doctor/SharedRecords";
 import PatientSharedRecords from "./pages/doctor/PatientSharedRecords";
+import AddRecordPage from "./pages/patient/AddRecordPage";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +64,10 @@ const router = createBrowserRouter([
           {
             path: "allEmergencyRecords",
             element: <AllEmergencyRecords />,
+          },
+          {
+            path: "add-record",
+            element: <AddRecordPage />,
           },
         ],
       },
@@ -124,26 +128,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
   <WalletProvider>
     <RouterProvider router={router} />
-    <Toaster
-      position="top-center"
-      gutter={12}
-      containerStyle={{ margin: "8px" }}
-      toastOptions={{
-        success: {
-          duration: 3000,
-        },
-        error: {
-          duration: 5000,
-        },
-        style: {
-          fontSize: "16px",
-          maxWidth: "500px",
-          padding: "16px 24px",
-          backgroundColor: "var(--color-grey-0)",
-          color: "var(--color-grey-700)",
-        },
-      }}
-    />
   </WalletProvider>
   // </React.StrictMode>
 );

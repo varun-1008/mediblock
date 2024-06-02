@@ -14,6 +14,7 @@ import {
   Radio,
   Settings,
   User,
+  UserPlus,
   UserRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,11 @@ const navLinks = {
       to: "/patient/allAppointments",
       label: "All Appointments",
       icon: <FileClock size={20} strokeWidth={2} />,
+    },
+    {
+      to: "/patient/add-record",
+      label: "Add Record",
+      icon: <UserPlus size={20} strokeWidth={2} />,
     },
     {
       to: "/patient/allRecords",
