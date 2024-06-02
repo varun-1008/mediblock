@@ -40,7 +40,6 @@ function AddRecordPage() {
 
   function elementFunction(linkIndex) {
     linkIndex = parseInt(linkIndex);
-    console.log(linkIndex);
     onOpen("create-record", { createType: "existing", linkIndex: linkIndex });
   }
 
