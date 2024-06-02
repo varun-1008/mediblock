@@ -166,20 +166,3 @@ export default function BookAnAppointment() {
     </div>
   );
 }
-
-// function Element({ isSelected, linkIndex, elementFunction }) {
-//   return (
-//     <>
-//       <div className="flex items-center gap-2 select-none">
-//         <Label className="flex items-center gap-2 cursor-pointer">
-//           <input
-//             type="checkbox"
-//             checked={isSelected}
-//             onChange={() => elementFunction(linkIndex)}
-//           />
-//           {isSelected ? "Unselect" : "Select"}
-//         </Label>
-//       </div>
-//     </>
-//   );
-// }
