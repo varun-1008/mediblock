@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom/dist";
 import { useModal } from "@/hooks/ModalStore";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
+import { getPublicKey } from "@/utils/supabase";
 
 function CreateRecord({ createType, linkIndex }) {
   const [title, setTitle] = useState("");
@@ -43,13 +44,13 @@ function CreateRecord({ createType, linkIndex }) {
       };
 
       recordData = JSON.stringify(recordData);
-
+      const {key, encryptedData} = await encryptS(recordData);
+      const publickey = await getPublicKey(patientAddress)
+      const encryptedKey = await encryptA(key, publicKey)
       const ipfsData = await ipfsUpload(recordData);
       const cid = ipfsData.IpfsHash;
-
       const time = Date.now();
       let tx;
-
       if (createType === "new")
         tx = await contract
           .connect(signer)

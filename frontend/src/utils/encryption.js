@@ -3,7 +3,7 @@ export async function generateKeyPair() {
   return await res.json();
 }
 
-export async function encryptS({ data }) {
+export async function encryptS(data) {
   const res = await fetch(
     "https://backend-varun1008s-projects.vercel.app/encryptS",
     {
@@ -18,7 +18,7 @@ export async function encryptS({ data }) {
   return await res.json();
 }
 
-export async function decryptS({ encryptedData, key }) {
+export async function decryptS(encryptedData, key) {
   const res = await fetch(
     "https://backend-varun1008s-projects.vercel.app/decryptS",
     {
@@ -34,7 +34,7 @@ export async function decryptS({ encryptedData, key }) {
   return await res.json();
 }
 
-export async function encryptA({ publicKey, data }) {
+export async function encryptA(data, publicKey) {
   const res = await fetch(
     "https://backend-varun1008s-projects.vercel.app/encryptA",
     {
@@ -50,7 +50,7 @@ export async function encryptA({ publicKey, data }) {
   return await res.json();
 }
 
-export async function decryptA({ privateKey, encryptedData }) {
+export async function decryptA(encryptedData, privateKey) {
   const res = await fetch(
     "https://backend-varun1008s-projects.vercel.app/decryptA",
     {

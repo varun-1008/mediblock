@@ -9,9 +9,10 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { addKeyPair } from "@/utils/supabase";
 
 function RegisterDoctor() {
-  const { signer, contract, setRole } = useWallet();
+  const { signer, contract, setRole, address} = useWallet();
   const { register, handleSubmit, getValues } = useForm();
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ function RegisterDoctor() {
       toast.success("Registering as doctor");
 
       await registerDoctor({ cid, signer, contract });
-
+      await addKeyPair(address);
       toast.success("Successfully registered");
       setRole(2);
       navigate("/dashboard");
