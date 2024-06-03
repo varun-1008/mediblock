@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import useWallet from "../context/UseWallet";
-import Records from "../ui/Records";
+import useWallet from "../../context/UseWallet";
+import { Records } from "@/ui/Records";
+import { LoadingState } from "@/components/LoadingState";
 
 function AllRecords() {
   const [records, setRecords] = useState(null);
   const { signer, contract, address } = useWallet();
-
 
   useEffect(() => {
     (async function () {
@@ -35,14 +35,23 @@ function AllRecords() {
     })();
   }, [signer, contract]);
 
-  if (!records) return <h1>Loading</h1>;
+  if (!records) return <LoadingState />;
 
   return (
-    <>
-      <h1>All Records</h1>
-
-      <Records recordsData={{address, records}}/>
-    </>
+    <div className="space-y-10">
+      <div>
+        <h1 className="text-base font-medium">All Records</h1>
+        <p className="text-zinc-400 text-sm">
+          List of all the secured records prescribed by the doctors
+        </p>
+      </div>
+      {records.length === 0 && (
+        <div className="h-40 flex items-center justify-center">
+          <span className="text-zinc-400">No records found</span>
+        </div>
+      )}
+      <Records address={address} records={records} />
+    </div>
   );
 }
 

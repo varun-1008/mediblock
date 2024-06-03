@@ -21,6 +21,8 @@ library IterableMappingPatient {
         mapping(uint => Access[]) access;
         mapping(uint => Record[]) records;
         address[] appointedDoctors;
+        uint numberOfAppointments;
+        uint numberOfRecords;
     }
 
     struct Map {
@@ -69,6 +71,8 @@ library IterableMappingDoctor {
     struct Doctor {
         string info;
         address[] appointments;
+        uint numberOfAppointments;
+        uint numberOfRecords;
     }
 
     struct Map {

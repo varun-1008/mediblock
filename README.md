@@ -1,10 +1,20 @@
 # Smart Contract
 
+# For windows
+
 - `cd smart_contract`
 - `yarn hardhat node`
 - `yarn hardhat run .\scripts\deploy.js --network localhost`
 - `yarn hardhat run .\scripts\register.js --network localhost`
 - `yarn hardhat run .\scripts\addRecordExising.js --network localhost`
+
+# For macos
+
+- `cd smart_contract`
+- `yarn hardhat node`
+- `yarn hardhat run scripts/deploy.js --network localhost`
+- `yarn hardhat run scripts/register.js --network localhost`
+- `yarn hardhat run scripts/addRecordExising.js --network localhost`
 
 # Frontend
 

@@ -1,22 +1,27 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/Dashboard";
 import AppLayout from "./ui/AppLayout";
 import WalletProvider from "./context/WalletContext";
 import Register from "./pages/Register";
-import BoookAppointment from "./pages/BookAppointment";
-import ViewAppointments from "./pages/ViewAppointments";
-import AllAppointments from "./pages/AllAppointments";
-import ViewAppointment from "./pages/ViewAppointment";
-import CreateRecord from "./pages/CreateRecord";
-import AllRecords from "./pages/AllRecords";
-import AllEmergencyRecords from "./pages/AllEmergencyRecords";
-import BookAnAppointment from "./pages/BookAnAppointment";
+import BoookAppointment from "./pages/patient/BookAppointment";
+import ViewAppointments from "./pages/doctor/ViewAppointments";
+import AllAppointments from "./pages/patient/AllAppointments";
+import ViewAppointment from "./pages/doctor/ViewAppointment";
+import CreateRecord from "./pages/doctor/CreateRecord";
+import AllRecords from "./pages/patient/AllRecords";
+import AllEmergencyRecords from "./pages/patient/AllEmergencyRecords";
+import BookAnAppointment from "./pages/patient/BookAnAppointment";
 
 function App() {
   return (
     <>
-      <WalletProvider>
+      {/* <WalletProvider>
           <BrowserRouter>
             <Routes>
               <Route
@@ -66,7 +71,7 @@ function App() {
               },
             }}
           />
-      </WalletProvider>
+      </WalletProvider> */}
     </>
   );
 }

@@ -1,85 +1,62 @@
-import { useState } from "react";
-import Modal from "./Modal";
-import Record from "./Record";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { RecordTimeline } from "@/components/RecordTimeline";
+import { Badge } from "@/components/ui/badge";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { RecordFeatureButton } from "@/components/RecordFeatureButton";
 
-function Records({ recordsData, buttonTitle, buttonFunction }) {
-  const [selected, setSelected] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(null);
-
-  const { address, records } = recordsData;
-
-  function handleExpand(index) {
-    setIsExpanded(isExpanded === index ? null : index);
-  }
-
-  function onClose() {
-    setSelected(null);
-  }
-
-  // function handleView({address, linkIndex, recordIndex}) {
-  //   setSelected({
-  //     address,
-  //     linkIndex,
-  //     recordIndex
-  //   })
-  // }
-
+export function Records({
+  address,
+  records,
+  selected,
+  elementFunction,
+  thinTitle,
+  type,
+}) {
   return (
-    <>
-      <h1>Records</h1>
-      {records.map((linkRecords, index) => {
-        return (
-          <div key={index}>
-            {linkRecords.slice(0, 1).map((record) => {
-              return (
-                <div key={record.time}>
-                  <p onClick={() => handleExpand(index)}>{record.title}</p>
-                  <button
-                    onClick={() =>
-                      setSelected({
-                        address,
-                        linkIndex: record.linkIndex,
-                        recordIndex: record.recordIndex,
-                      })
-                    }
-                  >
-                    View
-                  </button>
-                  <button onClick={() => buttonFunction({linkIndex : record.linkIndex})}>{buttonTitle}</button>
+    <div className="space-y-5">
+      <Accordion type="single" collapsible className="w-full">
+        {records.map((linkRecords, index) => (
+          <AccordionItem key={index} value={`item-${index}`}>
+            <AccordionTrigger>
+              <div
+                className={cn(
+                  "flex gap-1 text-base font-medium",
+                  thinTitle && "font-normal"
+                )}
+              >
+                {linkRecords[0].title}
+                {selected?.includes(linkRecords[0].linkIndex) && (
+                  <Badge className="bg-emerald-500 ml-2 hover:bg-emerald-500/90 gap-1">
+                    <Check size={15} strokeWidth={3} />
+                    Selected
+                  </Badge>
+                )}
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="space-y-5">
+                <div className="flex items-center gap-5">
+                  <RecordTimeline linkRecords={linkRecords} address={address} />
                 </div>
-              );
-            })}
-
-            {isExpanded === index &&
-              linkRecords.slice(1).map((record) => {
-                return (
-                  <div key={record.time}>
-                    <p>{record.title}</p>
-                    <button
-                      onClick={() =>
-                        setSelected({
-                          address,
-                          linkIndex: record.linkIndex,
-                          recordIndex: record.recordIndex,
-                        })
-                      }
-                    >
-                      View
-                    </button>
-                  </div>
-                );
-              })}
-          </div>
-        );
-      })}
-
-      {selected && (
-        <Modal onClose={onClose}>
-          <Record recordData={{ address, ...selected }} />
-        </Modal>
-      )}
-    </>
+                {elementFunction && (
+                  <RecordFeatureButton
+                    isSelected={selected?.includes(linkRecords[0].linkIndex)}
+                    linkIndex={linkRecords[0].linkIndex}
+                    elementFunction={elementFunction}
+                    type={type}
+                  />
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
   );
 }
-
-export default Records;
