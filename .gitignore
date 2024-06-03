@@ -1,5 +1,6 @@
 node_modules
 .env
+.vercel
 coverage
 coverage.json
 typechain
