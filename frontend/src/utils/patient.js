@@ -11,6 +11,7 @@ export async function registerPatient({ cid, signer, contract }) {
 export async function patientInfoCid({ address, contract }) {
   try {
     const cid = await contract.getPatientInfo(address);
+    console.log("cid = ", cid);
     return cid;
   } catch (err) {
     throw new Error("Cannot fetch patient info");

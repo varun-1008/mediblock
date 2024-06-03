@@ -2,6 +2,7 @@ import { LoadingState } from "@/components/LoadingState";
 import { UserDetails } from "@/components/UserDetails";
 import useWallet from "@/context/UseWallet";
 import { doctorInfoCid } from "@/utils/doctor";
+import { decryptGA } from "@/utils/encryption";
 import { ipfsDownload } from "@/utils/ipfs";
 import { patientInfoCid } from "@/utils/patient";
 import { useEffect, useState } from "react";
@@ -12,16 +13,20 @@ function ProfilePage() {
 
   useEffect(() => {
     (async function () {
-      let infoCid;
-      if (role === 1) infoCid = await patientInfoCid({ address, contract });
-      if (role === 2) infoCid = await doctorInfoCid({ address, contract });
+      let cid;
+      if (role === 1)
+        cid = await patientInfoCid({ address, contract });
+      if (role === 2)
+        cid = await doctorInfoCid({ address, contract });
 
-      if (infoCid) {
-        const data = await ipfsDownload(infoCid);
-        setData(data);
-      }
+      const encryptedInfo = await ipfsDownload(cid);
+
+      let info = await decryptGA(encryptedInfo);
+      info = JSON.parse(info);
+
+      setData(info);
     })();
-  }, []);
+  }, [address, contract, role]);
 
   if (!data) return <LoadingState />;
 

@@ -5,6 +5,7 @@ import { TotalRecords } from "@/components/TotalRecords";
 import useWallet from "@/context/UseWallet";
 import RevokeAccess from "@/ui/RevokeAccess";
 import { doctorInfoCid } from "@/utils/doctor";
+import { decryptGA } from "@/utils/encryption";
 import { ipfsDownload } from "@/utils/ipfs";
 import { patientInfoCid } from "@/utils/patient";
 import { useEffect, useState } from "react";
@@ -20,7 +21,11 @@ function Dashboard() {
       if (role === 2) infoCid = await doctorInfoCid({ address, contract });
 
       if (infoCid) {
-        const data = await ipfsDownload(infoCid);
+        const encryptedInfo = await ipfsDownload(infoCid);
+
+        let data = await decryptGA(encryptedInfo);
+        data = JSON.parse(data);
+
         if (role === 1) {
           data["numberOfRecords"] = Number(
             await contract.connect(signer).getNumberOfRecordsPatient()

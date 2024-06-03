@@ -64,6 +64,7 @@ contract MediBlock {
      */
     function patientRegistration(string memory _info) public isUnregistered {
         role[msg.sender] = Role.Patient;
+        console.log(_info);
         patients.set(msg.sender, _info);
     }
 
@@ -88,6 +89,7 @@ contract MediBlock {
      */
     function getPatientInfo(address _patient) public view isPatient(_patient) returns (string memory) {
         IterableMappingPatient.Patient storage patient = patients.get(_patient);
+        console.log(patient.info);
         return patient.info;
     }
 
